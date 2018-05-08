@@ -30,6 +30,7 @@
 ///  L0 00 R0
 ///  LL 0L RL
 ///
+int parse_command_line (int argc, char *argv[]);
 int parse_command_line (int argc, char *argv[])
 {
   (void) argc;
@@ -111,8 +112,8 @@ int main(int argc, char *argv[])
           if (LASResult ())
             {
               const char *fl = "LASPACK_ERR.txt";
-              printf ("Look %s\n", fl);
               FILE *fp_err;
+              printf ("Look %s\n", fl);
               fp_err = fopen (fl, "w");
               WriteLASErrDescr (fp_err);
               fclose (fp_err);

@@ -21,6 +21,7 @@ void print_to_file (const char * filename, double *X, double*Y, double * data, i
 
   fclose (fp);
 }
+void print_to_file_both (const char * filename, double *X, double*Y, double *data1, double *data2, int size);
 void print_to_file_both (const char * filename, double *X, double*Y, double *data1, double *data2, int size)
 {
   FILE *fp;

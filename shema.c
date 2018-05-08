@@ -1,4 +1,5 @@
 #include "head.h"
+double min (double *array, int n);
 double min (double *array, int n)
 {
   double min;
@@ -12,6 +13,7 @@ double min (double *array, int n)
     }
   return min;
 }
+void copy_answer (Vector *x, double *G, double *V1, double *V2, P_she *p_s);
 void copy_answer (Vector *x, double *G, double *V1, double *V2, P_she *p_s)
 {
   unsigned int k;
@@ -23,12 +25,14 @@ void copy_answer (Vector *x, double *G, double *V1, double *V2, P_she *p_s)
       V2[i] = V_GetCmp (x, k + 2);
     }
 }
+int get_safe (int i, int n);
 int get_safe (int i, int n)
 {
   if (i >= n || i < 0)
     return 0;
   return i;
 }
+void my_sleep (double c);
 void my_sleep (double c)
 {
   double t0, t = 0;
@@ -39,18 +43,22 @@ void my_sleep (double c)
     }
 }
 
-void run_gnuplott ()
+void run_gnuplott (void);
+void run_gnuplott (void)
 {
   const char *filename_com = "com.txt";
   char path_dest [LEN];
+  int res;
 
   sprintf (path_dest, "\"gnuplot\" %s%c\"", filename_com,'\0');
 
-  int res = system (path_dest);
+  res = system (path_dest);
   (void) res;
 
   my_sleep (1e-3);
 }
+void fill_command_file (const char *val_name, P_she *p_s, int time_step,
+                        const char *val_path);
 void fill_command_file (const char *val_name, P_she *p_s, int time_step,
                         const char *val_path)
 {
@@ -68,6 +76,7 @@ void fill_command_file (const char *val_name, P_she *p_s, int time_step,
 
   fclose (f_com);
 }
+void print_paint_pm3d_command (char *path, const char *fname);
 void print_paint_pm3d_command (char *path, const char *fname)
 {
   const char *palette = "set palette rgbformulae 34,35,36";
@@ -75,11 +84,13 @@ void print_paint_pm3d_command (char *path, const char *fname)
   sprintf (path, "%s; %s; splot '%s' with pm3d%c",
            palette, map, fname, '\0');
 }
+void print_paint_vectors_command (char *path, const char *fname);
 void print_paint_vectors_command (char *path, const char *fname)
 {
   sprintf (path, "plot '%s' using 1:2:3:4 with vectors filled head lw 3%c",
            fname, '\0');
 }
+void print_values_X_order_exp (P_she *p_s, double *X, double *Y, int n, double *val, FILE *fp);
 void print_values_X_order_exp (P_she *p_s, double *X, double *Y, int n, double *val, FILE *fp)
 {
   double x = 0;
@@ -104,6 +115,7 @@ void print_values_X_order_exp (P_she *p_s, double *X, double *Y, int n, double *
   if (print_count != n)
     printf ("Error in print_values_X_order\n");
 }
+void run_gnuplot (P_she *p_s, int time_step, double *X, double *Y, double *G);
 void run_gnuplot (P_she *p_s, int time_step, double *X, double *Y, double *G)
 {
   char path_g [LEN];
@@ -201,9 +213,9 @@ else
         }
       else
         {
-          solve_system (matrix, ind, rhs);
+//          solve_system_BICGSTAB (matrix, ind, rhs);
         }
-//      run_gnuplot (p_s, timestep, X, Y, G);
+      run_gnuplot (p_s, timestep, X, Y, G);
     }
   if (LASPACK)
     {

@@ -12,8 +12,8 @@ void param_dif (P_gas * p_d)
 void param_she_step (P_she *p_s, P_gas *p_d, int it_t, int it_sp)
 {
   int x, y;
-  x = p_s->M_x = (it_sp == 0 ? 20 : p_s->M_x * 2);
-  y = p_s->M_y = (it_sp == 0 ? 20 : p_s->M_y * 2);
+  x = p_s->M_x = (it_sp == 0 ? 3 : p_s->M_x * 2);
+  y = p_s->M_y = (it_sp == 0 ? 3 : p_s->M_y * 2);
   p_s->N   = (it_t  == 0 ? 20 : p_s->N   * 2);
   p_s->Dim = (2 * x - 1) *(3 * y - 2) + y * (x - 1);
   p_s->h_x = p_d->Segm_X / p_s->M_x;
@@ -61,10 +61,10 @@ double dvdy (double t, double x, double y)
   (void) t;
   (void) x;
   (void) y;
-  double res = cos (x) * sin (y) * exp (t);
-  return res;
+  return cos (x) * sin (y) * exp (t);
 }
 
+double dg_dt (double t, double x, double y);
 double dg_dt (double t, double x, double y)
 {
   (void) t;
@@ -73,109 +73,127 @@ double dg_dt (double t, double x, double y)
   return 1;
 }
 
+double dg_dx (double t, double x, double y);
 double dg_dx (double t, double x, double y)
 {
   (void) t;
-  double res = - sin (x) * sin (y);
-  return res;
+  return - sin (x) * sin (y);
 }
 
+double dg_dy (double t, double x, double y);
 double dg_dy (double t, double x, double y)
 {
   (void) t;
-  double res = cos (x) * cos (y);
-  return res;
+  return cos (x) * cos (y);
 }
 
+double du1_dt (double t, double x, double y);
 double du1_dt (double t, double x, double y)
 {
   return sm_vx (t, x, y);
 }
 
+double du1_dx (double t, double x, double y);
 double du1_dx (double t, double x, double y)
 {
   double res = cos (x) * sin (y) * exp (t);
   return res;
 }
 
+double du1_dy (double t, double x, double y);
 double du1_dy (double t, double x, double y)
 {
   double res = sin (x) * cos (y) * exp (t);
   return res;
 }
 
+double ddu1_dxdx (double t, double x, double y);
 double ddu1_dxdx (double t, double x, double y)
 {
   return - sm_vx (t, x, y);
 }
 
+double ddu1_dydy (double t, double x, double y);
 double ddu1_dydy (double t, double x, double y)
 {
   return - sm_vy (t, x, y);
 }
 
+double ddu1_dxdy (double t, double x, double y);
 double ddu1_dxdy (double t, double x, double y)
 {
   return cos (x) * cos (y) * exp (t);
 }
 
+double du1u1_dx (double t, double x, double y);
 double du1u1_dx (double t, double x, double y)
 {
   return 2 * sm_vx (t, x, y) * du1_dx (t, x, y);
 }
 
+double du2_dt (double t, double x, double y);
 double du2_dt (double t, double x, double y)
 {
   return - sm_vy (t, x, y);
 }
 
+double du2_dx (double t, double x, double y);
 double du2_dx (double t, double x, double y)
 {
   double res = cos (x) * sin (y) * exp (-t);
   return res;
 }
 
+double du2_dy (double t, double x, double y);
 double du2_dy (double t, double x, double y)
 {
   double res = sin (x) * cos (y) * exp (-t);
   return res;
 }
 
+double ddu2_dxdx (double t, double x, double y);
 double ddu2_dxdx (double t, double x, double y)
 {
   return - sm_vy (t, x, y);
 }
 
+double ddu2_dydy (double t, double x, double y);
 double ddu2_dydy (double t, double x, double y)
 {
   return - sm_vy (t, x, y);
 }
 
+double ddu2_dxdy (double t, double x, double y);
 double ddu2_dxdy (double t, double x, double y)
 {
   return cos (x) * cos (y) * exp (-t);
 }
 
+double du2u2_dy (double t, double x, double y);
 double du2u2_dy (double t, double x, double y)
 {
   return 2 * sm_vy (t, x, y) * du2_dy (t, x, y);
 }
 
+double du1g_dx (double t, double x, double y);
 double du1g_dx (double t, double x, double y)
 {
   return sm_vx (t, x, y) * dg_dx (t, x, y) + du1_dx (t, x, y) * sm_g (t, x, y);
 }
 
+double du2g_dy (double t, double x, double y);
 double du2g_dy (double t, double x, double y)
 {
   return sm_vy (t, x, y) * dg_dy (t, x, y) + du2_dy (t, x, y) * sm_g (t, x, y);
 }
 
+double du1u2_dx (double t, double x, double y);
 double du1u2_dx (double t, double x, double y)
 {
   return sm_vx (t, x, y) * du2_dx (t, x, y) + du1_dx (t, x, y) * sm_vy (t, x, y);
 }
 
+double du1u2_dy (double t, double x, double y);
 double du1u2_dy (double t, double x, double y)
 {
   return sm_vx (t, x, y) * du2_dy (t, x, y) + du1_dy (t, x, y) * sm_vy (t, x, y);
