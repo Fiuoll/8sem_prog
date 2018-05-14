@@ -26,7 +26,7 @@ if (st[i] == 6)
                               + 2 * v2_2B
                               - 0.5 * v2_3B))
       + tau2 * Func_0 (tt, xx, yy);
-  V_SetCmp (&b, mm, tmp);
+  rhs[mm] = tmp;
 
   // V1
   mm++;
