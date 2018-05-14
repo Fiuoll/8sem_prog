@@ -41,7 +41,7 @@ int parse_command_line (int argc, char *argv[])
 int main(int argc, char *argv[])
 {
   int it_t, it_sp;
-  int it_t_max = 1, it_sp_max = 1;
+  int it_t_max = 2, it_sp_max = 2;
   int it = 0, it_max;
 
   double *nc_g, *nl2_g;
@@ -63,7 +63,7 @@ int main(int argc, char *argv[])
 
   it_max = it_sp_max * it_t_max;
 
-  param_she_step (&p_s, &p_d, 0, 0);
+  param_she_step (&p_s, &p_d, it_t_max, it_sp_max);
 
   workspace_d = (double*)malloc(5 * p_s.Dim * sizeof(double));
   workspace_i = (int*)malloc(5 * p_s.Dim * sizeof(int));
@@ -98,6 +98,7 @@ int main(int argc, char *argv[])
         {
           printf ("time it = %d, sp it = %d \n", it_t, it_sp);
           param_she_step (&p_s, &p_d, it_t, it_sp);
+          printf ("Params system: hx = %f, hy = %f, tau = %f\n", p_s.h_x, p_s.h_y, p_s.tau);
           printf ("fill maps\n");
           Setka (st, X, Y, M0L, M0R, L0M, R0M, &p_s);
           printf ("Computing...\n");
@@ -109,7 +110,7 @@ int main(int argc, char *argv[])
           printf ("Norms L2: %e, %e, %e\n", p_s.h_x * nl2_g[it], p_s.h_x * nl2_v1[it], p_s.h_x * nl2_v2[it]);
           it++;
 
-          if (LASResult ())
+          if (LASPACK && LASResult ())
             {
               const char *fl = "LASPACK_ERR.txt";
               FILE *fp_err;

@@ -1,5 +1,4 @@
 #include "head.h"
-double min (double *array, int n);
 double min (double *array, int n)
 {
   double min;
@@ -13,8 +12,7 @@ double min (double *array, int n)
     }
   return min;
 }
-void copy_answer (Vector *x, double *G, double *V1, double *V2, P_she *p_s);
-void copy_answer (Vector *x, double *G, double *V1, double *V2, P_she *p_s)
+void copy_answer_L (Vector *x, double *G, double *V1, double *V2, P_she *p_s)
 {
   unsigned int k;
   for (int i = 0; i < p_s->Dim; i++)
@@ -23,6 +21,16 @@ void copy_answer (Vector *x, double *G, double *V1, double *V2, P_she *p_s)
       G[i] = V_GetCmp (x, k);
       V1[i] = V_GetCmp (x, k + 1);
       V2[i] = V_GetCmp (x, k + 2);
+    }
+}
+void copy_answer (double *x, double *G, double *V1, double *V2, P_she *p_s)
+{
+  unsigned int k;
+  for (int i = 0; i < p_s->Dim; i++)
+    {
+      G[i] = x[3 * i];
+      V1[i] = x[3 * i + 1];
+      V2[i] = x[3 * i + 2];
     }
 }
 int get_safe (int i, int n);
@@ -149,6 +157,7 @@ void Shema (double *G, double *V1, double *V2, int *st, double *X, double *Y, in
   double *matrix;
   int    *ind;
   double *rhs;
+  double *d;
 #include"./include/perem.c"
 
   n = p_s->Dim;
@@ -158,7 +167,7 @@ void Shema (double *G, double *V1, double *V2, int *st, double *X, double *Y, in
   hx = p_s->h_x;
   hy = p_s->h_y;
   tau = p_s->tau;
-  k = 0;
+  k = p_s->Dim + 1;
 
 if (LASPACK)
   {
@@ -180,7 +189,7 @@ else
     {
 #include"./include/mum.c"
       tt = timestep * tau;
-      for (i = 0, mm = 1; i < n; i++, mm++)
+      for (i = 0, mm = 0; i < n; i++, mm++)
         {
 #include"./include/nodeparam.c"
           if (LASPACK)
@@ -209,13 +218,20 @@ else
       if (LASPACK)
         {
           BiCGSTABIter (&A, &x, &b, MAX_ITER, JacobiPrecond, 1);
-          copy_answer (&x, G, V1, V2, p_s);
+          copy_answer_L (&x, G, V1, V2, p_s);
         }
       else
         {
-//          solve_system_BICGSTAB (matrix, ind, rhs);
+          ind[mm] = k;
+          d = (double *) malloc (7 * (3 * n) * sizeof (double));
+          prepare_to_solve_system (d, G, V1, V2, n);
+          if (solve_system_BICGSTAB (matrix, ind, rhs, 3 * n, d))
+            {
+              return;
+            }
+          free (d);
         }
-      run_gnuplot (p_s, timestep, X, Y, G);
+//      run_gnuplot (p_s, timestep, X, Y, G);
     }
   if (LASPACK)
     {

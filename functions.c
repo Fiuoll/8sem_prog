@@ -12,9 +12,12 @@ void param_dif (P_gas * p_d)
 void param_she_step (P_she *p_s, P_gas *p_d, int it_t, int it_sp)
 {
   int x, y;
-  x = p_s->M_x = (it_sp == 0 ? 3 : p_s->M_x * 2);
-  y = p_s->M_y = (it_sp == 0 ? 3 : p_s->M_y * 2);
-  p_s->N   = (it_t  == 0 ? 20 : p_s->N   * 2);
+  int init_x = 3;
+  int init_y = 3;
+  int init_t = 1;
+  x = p_s->M_x = init_x * (1 << (it_sp));
+  y = p_s->M_y = init_y * (1 << (it_sp));
+  p_s->N   = init_t * (1 << (it_t));
   p_s->Dim = (2 * x - 1) *(3 * y - 2) + y * (x - 1);
   p_s->h_x = p_d->Segm_X / p_s->M_x;
   p_s->h_y = p_d->Segm_Y / p_s->M_y;
@@ -22,15 +25,15 @@ void param_she_step (P_she *p_s, P_gas *p_d, int it_t, int it_sp)
   p_s->eta = 1;
 
 
-  p_s->nz = 1;
-  p_s->nz += (4 + 1 + 2) * (2 * x - 1 - 2); // status 3
-  p_s->nz += (4 + 1 + 1) * (2 * y - 1 - 1); // status 1
-  p_s->nz += (4 + 1 + 1) * (3 * y - 2 - 1); // status 2
-  p_s->nz += (1 + 1 + 1) * (2);             // status 7
-  p_s->nz += (1 + 1 + 1) * (y);             // status 4
-  p_s->nz += (4 + 1 + 1) * (2 * x - 1 - 2); // status 5
-  p_s->nz += (4 + 1 + 1) * (3 * x - 2 - 2); // status 6
-  p_s->nz += (9 + 7 + 7) * ((2 * x - 1 - 2) * (3 * y - 2 - 2) + (2 * x - 1 - 1) * (y - 2)); // status 0
+  p_s->nz = p_s->Dim + 1;
+  p_s->nz += (4 + 1 + 2 - 3) * (2 * x - 1 - 2); // status 3
+  p_s->nz += (4 + 1 + 1 - 3) * (2 * y - 1 - 1); // status 1
+  p_s->nz += (4 + 1 + 1 - 3) * (3 * y - 2 - 1); // status 2
+  p_s->nz += (1 + 1 + 1 - 3) * (2);             // status 7
+  p_s->nz += (1 + 1 + 1 - 3) * (y);             // status 4
+  p_s->nz += (4 + 1 + 1 - 3) * (x - 2);         // status 5
+  p_s->nz += (4 + 1 + 1 - 3) * (3 * x - 2 - 2); // status 6
+  p_s->nz += (9 + 7 + 7 - 3) * ((2 * x - 1 - 2) * (3 * y - 2 - 2) + (x - 1) * (y - 2)); // status 0
 }
 
 double sm_g (double t, double x, double y)
@@ -38,6 +41,7 @@ double sm_g (double t, double x, double y)
   (void) t;
   (void) x;
   (void) y;
+  return 1;
   return cos (x) * sin (y) + t;
   return log ((cos (2 * x) + 3./2.) * (sin (2 * y) + 3./2.) * exp(t));
 }
@@ -46,6 +50,7 @@ double sm_vx (double t, double x, double y)
   (void) t;
   (void) x;
   (void) y;
+  return 0;
   return sin (x) * sin (y) * exp (t);
 }
 double sm_vy (double t, double x, double y)
@@ -53,6 +58,7 @@ double sm_vy (double t, double x, double y)
   (void) t;
   (void) x;
   (void) y;
+  return 0;
   return sin (x) * sin (y) * exp (-t);
 }
 
@@ -212,6 +218,7 @@ double Func_0 (double t, double x, double y)
       + du2g_dy (t, x, y)
       + tmp * du2_dy (t, x, y));
 
+  return 0;
   return res;
 }
 
@@ -229,6 +236,7 @@ double Func_1 (double t, double x, double y, double p_rho, double mu)
                                   + ddu1_dydy (t, x, y)
                                    + (1. / 3.) * (ddu2_dxdy (t, x, y)));
 
+  return 0;
   return res;
 }
 
@@ -246,5 +254,6 @@ double Func_2 (double t, double x, double y, double p_rho, double mu)
                                          + ddu2_dxdx (t, x, y)
                                          + (1. / 3.) * (ddu1_dxdy (t, x, y)));
 
+  return 0;
   return res;
 }

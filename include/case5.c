@@ -2,8 +2,6 @@
 if (st[i] == 5)
 {
   //G
-  Q_SetLen (&A, mm, 4);
-
   tmp = 2. - thy * v200;
   matrix[mm] = tmp;
   ind[mm]    = k;

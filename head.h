@@ -8,9 +8,10 @@
 #include "laspack/rtc.h"
 #include "time.h"
 #define STRLEN 1234
-#define LASPACK 1
+#define LASPACK 0
 #define eps 1e-8
-#define MAX_ITER 2000
+#define EPS 1e-16
+#define MAX_ITER 200
 #define OMEGA 1
 #define COEF M_PI
 #define LEN 1234
@@ -50,4 +51,18 @@ double Func_2 (double t, double x, double y, double p_rho, double mu);
 double dvdy (double t, double x, double y);
 
 ///SHEMA
+double min (double *array, int n);
+void copy_answer_L (Vector *x, double *G, double *V1, double *V2, P_she *p_s);
 void Shema (double *G, double *V1, double *V2, int *st, double *X, double *Y, int *M0L, int *M0R, P_she *p_s, P_gas *p_d);
+
+/// SOLVER
+void prepare_to_solve_system (double *d, double *G, double *V1, double *V2, int n);
+int precond_matrix (int n, double *A, int * I);
+int precond_vector (int n, double *A, double *b, double *res);
+void linear_combination_2 (int n, double *a, double alpha, double *b, double omega, double *c, double *res);
+void set_z (int n, double *z);
+void linear_combination (int n, double *A, int *I, double *b, double *c, double *res, double omega);
+void copy_vector (int n, const double *from, double *to);
+void mult_matrix_vector (int n, double *A, int *I, double *x, double *res);
+double scalar (int n, double *a, double *b);
+int solve_system_BICGSTAB (double *A, int *I, double *b, int n, double *x);
