@@ -54,7 +54,7 @@ void print_norm_to_file (FILE *fp, int n, int m, double *array)
         {
           fprintf (fp, "%e |", array[i * m + j]);
         }
-      printf ("\n");
+      fprintf (fp, "\n");
     }
 }
 

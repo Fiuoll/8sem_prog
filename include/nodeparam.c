@@ -8,10 +8,10 @@
           mmgR0 = mm + 3;
           mmv1R0 = mm + 4;
           mmv2R0 = mm + 5;
-          mmg0L = 3 * M0L[i] + 1;
+          mmg0L = 3 * M0L[i] + LASPACK;
           mmv10L = mmg0L + 1;
           mmv20L = mmv10L + 1;
-          mmg0R = 3 * M0R[i] + 1;
+          mmg0R = 3 * M0R[i] + LASPACK;
           mmv10R = mmg0R + 1;
           mmv20R = mmv10R + 1;
 

@@ -24,14 +24,18 @@ void Norm_l2 (int it, int n, double *G, double *V1, double *V2, double *X, doubl
               double *res_G, double *res_V1, double *res_V2)
 {
   int i;
-  double sum_G = 0;
-  double sum_V1 = 0;
-  double sum_V2 = 0;
+  double sum_G = 0.;
+  double sum_V1 = 0.;
+  double sum_V2 = 0.;
+  double tmp;
   for (i = 0; i < n; i++)
     {
-      sum_G += (G[i] - sm_g (t, X[i], Y[i])) * (G[i] - sm_g (t, X[i], Y[i]));
-      sum_V1 += (V1[i] - sm_vx (t, X[i], Y[i])) * (V1[i] - sm_vx (t, X[i], Y[i]));
-      sum_V2 += (V2[i] - sm_vy (t, X[i], Y[i])) * (V2[i] - sm_vy (t, X[i], Y[i]));
+      tmp = G[i] - sm_g (t, X[i], Y[i]);
+      sum_G += tmp * tmp;
+      tmp = V1[i] - sm_vx (t, X[i], Y[i]);
+      sum_V1 += tmp * tmp;
+      tmp = V2[i] - sm_vy (t, X[i], Y[i]);
+      sum_V2 += tmp * tmp;
     }
   res_G[it] = sqrt (sum_G);
   res_V1[it] = sqrt (sum_V1);

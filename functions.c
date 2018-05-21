@@ -12,9 +12,9 @@ void param_dif (P_gas * p_d)
 void param_she_step (P_she *p_s, P_gas *p_d, int it_t, int it_sp)
 {
   int x, y;
-  int init_x = 3;
-  int init_y = 3;
-  int init_t = 1;
+  int init_x = 20;
+  int init_y = 20;
+  int init_t = 20;
   x = p_s->M_x = init_x * (1 << (it_sp));
   y = p_s->M_y = init_y * (1 << (it_sp));
   p_s->N   = init_t * (1 << (it_t));
@@ -67,6 +67,7 @@ double dvdy (double t, double x, double y)
   (void) t;
   (void) x;
   (void) y;
+  return 0;
   return cos (x) * sin (y) * exp (t);
 }
 

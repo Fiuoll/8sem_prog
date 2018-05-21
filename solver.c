@@ -66,6 +66,7 @@ int solve_system_BICGSTAB (double *A, int *I, double *b, int n, double *x)
   double denum;
   double beta;
   double resid;
+  double b_norm;
   int j = 0;
 
   double *r = x + n;
@@ -75,6 +76,7 @@ int solve_system_BICGSTAB (double *A, int *I, double *b, int n, double *x)
   double *s = u + n;
   double *As = s + n;
 
+  b_norm = sqrt (scalar (n, b, b));
   linear_combination (n, A, I, b, x, r, 1);
   copy_vector (n, r, p);
 
@@ -124,7 +126,7 @@ int solve_system_BICGSTAB (double *A, int *I, double *b, int n, double *x)
 
       resid = sqrt (scalar (n, r, r));
       printf ("RESIDUAL %e\n", resid);
-      if (resid < eps)
+      if (resid / b_norm < eps)
         {
           printf ("Converge! it = %d\n Residual = %e\n", j, resid);
           return 0;
@@ -148,6 +150,79 @@ int solve_system_BICGSTAB (double *A, int *I, double *b, int n, double *x)
 
   return 0;
 }
+void set_zero (int n, double *a)
+{
+  for (int i = 0; i < n; i++)
+    a[i] = 0.;
+}
+
+int solve_system_BICGSTAB_wiki (double *A, int *I, double *b, int n, double *x)
+{
+  double alpha;
+  double omega;
+  double beta;
+  double rho;
+  double rho_k;
+  double resid;
+  double b_norm;
+  int j = 0;
+
+  double *r = x + n;
+  double *r_ = r + n;
+  double *v = r_ + n;
+  double *p = v + n;
+  double *s = p + n;
+  double *t = s + n;
+
+  b_norm = sqrt (scalar (n, b, b));
+  linear_combination (n, A, I, b, x, r, 1);
+  copy_vector (n, r, r_);
+  rho = alpha = omega = 1;
+
+  resid = sqrt (scalar (n, r, r));
+  printf ("RESIDUAL %e\n", resid);
+  if (resid < eps)
+    {
+      printf ("Converge! it = %d\n Residual = %e\n", j, resid);
+      return 0;
+    }
+
+  set_zero (n, v);
+  set_zero (n, p);
+
+  for (j = 0; j < MAX_ITER; j++)
+    {
+      rho_k = scalar (n, r, r_);
+
+      beta = rho_k / rho * alpha / omega;
+
+      linear_combination_2 (n, p, -omega, v, 0., v, s);
+      linear_combination_2 (n, r, beta, s, 0., s, p);
+
+      mult_matrix_vector (n, A, I, p, v);
+
+      alpha = rho_k / (scalar (n, r_, v));
+
+      linear_combination_2 (n, r, -alpha, v, 0., v, s);
+
+      mult_matrix_vector (n, A, I, s, t);
+
+      omega = scalar (n, t, s) / scalar (n, t, t);
+
+      linear_combination_2 (n, x, omega, s, alpha, p, x);
+      linear_combination_2 (n, s, -omega, t, 0., t, r);
+
+      resid = sqrt (scalar (n, r, r));
+      printf ("RESIDUAL %e\n", resid);
+      if (resid / b_norm < eps)
+        {
+          printf ("Converge! it = %d\n Residual = %e\n", j, resid);
+          return 0;
+        }
+    }
+
+  return 0;
+}
 ////////////////////////////////////////////////////////////////////////////
 double scalar (int n, double *a, double *b)
 {
@@ -165,16 +240,22 @@ void mult_matrix_vector (int n, double *A, int *I, double *x, double *res)
   int i;
   int j;
   int l;
+  int m;
   double sum;
 
   for (i = 0; i < n; i++)
     {
-      l = I[i + 1] - I[i];
+      m = I[i];
+      l = I[i + 1] - m;
 
-      sum = 0.;
+      sum = x[i] * A[i];
       for (j = 0; j < l; j++)
         {
-          sum += x[i] * A[I[I[i] + j]];
+          sum += x[I[m + j]] * A[m + j];
+          if (fabs (sum) > 1e100)
+            {
+              printf ("WATAFAK?\n");
+            }
         }
       res[i] = sum;
     }
@@ -195,18 +276,24 @@ void linear_combination (int n, double *A, int *I, double *b, double *c, double 
   int i;
   int j;
   int l;
+  int m;
   double sum;
 
   for (i = 0; i < n; i++)
     {
-      l = I[i + 1] - I[i];
+      m = I[i];
+      l = I[i + 1] - m;
 
-      sum = 0.;
+      sum = c[i] * A[i];
       for (j = 0; j < l; j++)
         {
-          sum += c[i] * A[I[I[i] + j]];
+          sum += c[I[m + j]] * A[m + j];
         }
       res[i] = b[i] - omega * sum;
+      if (fabs (res[i]) > 1e-15)
+        {
+          printf ("Problems\n");
+        }
     }
 }
 /////////////////////////////////////////////////////////////////////////////////////////

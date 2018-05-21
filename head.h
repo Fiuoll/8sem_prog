@@ -66,3 +66,5 @@ void copy_vector (int n, const double *from, double *to);
 void mult_matrix_vector (int n, double *A, int *I, double *x, double *res);
 double scalar (int n, double *a, double *b);
 int solve_system_BICGSTAB (double *A, int *I, double *b, int n, double *x);
+
+int solve_system_BICGSTAB_wiki (double *A, int *I, double *b, int n, double *x);

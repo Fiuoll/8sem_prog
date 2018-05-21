@@ -25,7 +25,6 @@ void copy_answer_L (Vector *x, double *G, double *V1, double *V2, P_she *p_s)
 }
 void copy_answer (double *x, double *G, double *V1, double *V2, P_she *p_s)
 {
-  unsigned int k;
   for (int i = 0; i < p_s->Dim; i++)
     {
       G[i] = x[3 * i];
@@ -167,8 +166,6 @@ void Shema (double *G, double *V1, double *V2, int *st, double *X, double *Y, in
   hx = p_s->h_x;
   hy = p_s->h_y;
   tau = p_s->tau;
-  k = p_s->Dim + 1;
-
 if (LASPACK)
   {
     Q_Constr (&A, "A", 3 * n, False, Rowws, Normal, True);
@@ -181,6 +178,7 @@ else
     matrix = (double *) malloc (nz * sizeof (double));
     ind    = (int *) malloc (nz * sizeof (int));
     rhs    = (double *) malloc (3 * n * sizeof (double));
+    d      = (double *) malloc (7 * (3 * n) * sizeof (double));
   }
 
 #include"./include/viraj.c"
@@ -189,7 +187,7 @@ else
     {
 #include"./include/mum.c"
       tt = timestep * tau;
-      for (i = 0, mm = LASPACK; i < n; i++, mm++)
+      for (i = 0, mm = LASPACK, k = p_s->Dim + 1; i < n; i++, mm++)
         {
 #include"./include/nodeparam.c"
           if (LASPACK)
@@ -232,13 +230,12 @@ else
       else
         {
           ind[mm] = k;
-          d = (double *) malloc (7 * (3 * n) * sizeof (double));
+//          d = new double[7 * 3 * n];
           prepare_to_solve_system (d, G, V1, V2, n);
-          if (solve_system_BICGSTAB (matrix, ind, rhs, 3 * n, d))
+          if (solve_system_BICGSTAB_wiki (matrix, ind, rhs, 3 * n, d))
             {
               return;
             }
-          free (d);
         }
 //      run_gnuplot (p_s, timestep, X, Y, G);
     }
@@ -253,5 +250,6 @@ else
       free (matrix);
       free (rhs);
       free (ind);
+      free (d);
     }
 }

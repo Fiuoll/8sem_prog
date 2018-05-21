@@ -37,6 +37,14 @@ int parse_command_line (int argc, char *argv[])
   (void) argv;
   return 0;
 }
+void correct_array (int n, double *a)
+{
+  for (int i = 0; i < n; i++)
+    {
+      if (fabs (a[i]) < 1e-15 )
+        a[i] = 0.;
+    }
+}
 
 int main(int argc, char *argv[])
 {
@@ -103,6 +111,10 @@ int main(int argc, char *argv[])
           Setka (st, X, Y, M0L, M0R, L0M, R0M, &p_s);
           printf ("Computing...\n");
           Shema (G, V1, V2, st, X, Y, M0L, M0R, &p_s, &p_d);
+
+          correct_array (p_s.Dim, G);
+          correct_array (p_s.Dim, V1);
+          correct_array (p_s.Dim, V2);
           Norm_c (it, p_s.Dim, G, V1, V2, X, Y, 1, nc_g, nc_v1, nc_v2);
           Norm_l2 (it, p_s.Dim, G, V1, V2, X, Y, 1, nl2_g, nl2_v1, nl2_v2);
 
