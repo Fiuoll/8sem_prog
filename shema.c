@@ -189,7 +189,7 @@ else
     {
 #include"./include/mum.c"
       tt = timestep * tau;
-      for (i = 0, mm = 0; i < n; i++, mm++)
+      for (i = 0, mm = LASPACK; i < n; i++, mm++)
         {
 #include"./include/nodeparam.c"
           if (LASPACK)
@@ -213,6 +213,15 @@ else
 #include"./include/case5.c"
 #include"./include/case6.c"
 #include"./include/case7.c"
+            }
+          if (LASPACK && LASResult ())
+            {
+              const char *fl = "LASPACK_ERR.txt";
+              FILE *fp_err;
+              printf ("Look %s\n", fl);
+              fp_err = fopen (fl, "w");
+              WriteLASErrDescr (fp_err);
+              fclose (fp_err);
             }
         }
       if (LASPACK)
