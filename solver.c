@@ -10,6 +10,16 @@ void prepare_to_solve_system (double *d, double *G, double *V1, double *V2, int 
       d[3 * i + 2] = V2[i];
     }
 }
+void prepare_to_solve_system_L (Vector *d, double *G, double *V1, double *V2, int n)
+{
+  int i;
+  for (i = 0; i < n; i++)
+    {
+      V_SetCmp (d, 3 * i + 1,  G[i]);
+      V_SetCmp (d, 3 * i + 2, V1[i]);
+      V_SetCmp (d, 3 * i + 3, V2[i]);
+    }
+}
 
 /////////////////////////////////////////////////////////////////////////////
 // preconditioner Jacobi
@@ -75,6 +85,9 @@ int solve_system_BICGSTAB (double *A, int *I, double *b, int n, double *x)
   double *u = z + n;
   double *s = u + n;
   double *As = s + n;
+
+//  precond_matrix (n, A, I);
+//  precond_vector(n, A, b, b);
 
   b_norm = sqrt (scalar (n, b, b));
   linear_combination (n, A, I, b, x, r, 1);
@@ -174,6 +187,9 @@ int solve_system_BICGSTAB_wiki (double *A, int *I, double *b, int n, double *x)
   double *s = p + n;
   double *t = s + n;
 
+//  precond_matrix (n, A, I);
+//  precond_vector(n, A, b, b);
+
   b_norm = sqrt (scalar (n, b, b));
   linear_combination (n, A, I, b, x, r, 1);
   copy_vector (n, r, r_);
@@ -209,6 +225,10 @@ int solve_system_BICGSTAB_wiki (double *A, int *I, double *b, int n, double *x)
 
       omega = scalar (n, t, s) / scalar (n, t, t);
 
+      if (omega < 1e-6)
+        {
+          return j;
+        }
       linear_combination_2 (n, x, omega, s, alpha, p, x);
       linear_combination_2 (n, s, -omega, t, 0., t, r);
 

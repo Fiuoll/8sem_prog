@@ -8,14 +8,14 @@
 #include "laspack/rtc.h"
 #include "time.h"
 #define STRLEN 1234
-#define LASPACK 0
+#define LASPACK 1
 #define eps 1e-8
 #define EPS 1e-16
-#define MAX_ITER 200
+#define MAX_ITER 2000
 #define OMEGA 1
-#define COEF M_PI
+#define COEF 2 * M_PI
 #define LEN 1234
-
+#define RELEASE 0
 
 /// PRINTS
 void print_to_file (const char * filename, double *X, double *Y, double * data, int size);
@@ -40,6 +40,7 @@ void fill_1 (int *x, unsigned int n);
 void Setka (int *st, double *X, double *Y, int *lef, int *rig, int *bot, int *top, P_she *p_s);
 
 /// functions
+void correct_array (int n, double *a);
 void param_dif (P_gas * p_d);
 void param_she_step (P_she *p_s, P_gas *p_d, int it_t, int it_sp);
 double sm_g (double x, double y, double t);
@@ -56,6 +57,9 @@ void copy_answer_L (Vector *x, double *G, double *V1, double *V2, P_she *p_s);
 void Shema (double *G, double *V1, double *V2, int *st, double *X, double *Y, int *M0L, int *M0R, P_she *p_s, P_gas *p_d);
 
 /// SOLVER
+void prepare_to_solve_system_L (Vector *d, double *G, double *V1, double *V2, int n);
+void set_zero (int n, double *a);
+void copy_answer (double *x, double *G, double *V1, double *V2, P_she *p_s);
 void prepare_to_solve_system (double *d, double *G, double *V1, double *V2, int n);
 int precond_matrix (int n, double *A, int * I);
 int precond_vector (int n, double *A, double *b, double *res);

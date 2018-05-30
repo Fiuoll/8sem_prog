@@ -21,7 +21,7 @@ if (st[i] == 1)
   ind[k++]  = mmv100;
 
   tmp = 2 * g00 + thx * g00 * (v1R0 - v100)
-      + thx * ( g00 * v100
+      + thx * ( //g00 * v100
                - 2.5 * gR0 * v1R0
                + 2 * g_2R * v1_2R
                - 0.5 * g_3R * v1_3R

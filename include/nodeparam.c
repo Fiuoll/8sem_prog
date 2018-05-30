@@ -1,4 +1,4 @@
-//          mmg00 = mm;
+          mmg00 = mm;
           mmv100 = mm + 1;
           mmv200 = mm + 2;
 

@@ -3,7 +3,7 @@ double hx, hy, tau,
        tau2, tau4, tau6, thxx8, thxx6, thyy8, thyy6, thxy, Max, May, pressure;
 double mu, MUM, MU8x, MU8y, MU6x, MU6y, MUv1, MUv2;
 
-int mm, /*mmg00,*/ mmgR0, mmgL0, mmg0R, mmg0L,
+int mm, mmg00, mmgR0, mmgL0, mmg0R, mmg0L,
     mmv100, mmv1R0, mmv10R, mmv1L0, mmv10L/*, mmv1RR, mmv1LL, mmv1RL, mmv1LR*/,
     mmv200, mmv2R0, mmv20R, mmv2L0, mmv20L/*, mmv2RR, mmv2LL, mmv2LR, mmv2RL*/;
 double g00, gR0, g0R, gL0, g0L,

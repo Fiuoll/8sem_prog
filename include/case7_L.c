@@ -2,7 +2,7 @@
 if (st[i] == 7)
 {
   //G
-  Q_SetLen (&A, mm, 1);
+  Q_SetLen (&A, mmg00, 1);
   Q_SetEntry (&A, mm, 0, mm, 1);
   V_SetCmp (&b, mm, sm_g (tt, xx, yy));
 

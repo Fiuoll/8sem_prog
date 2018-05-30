@@ -6,8 +6,8 @@ void set_str (int *st, double *X, double *Y, int *lef, int *rig, int *bot, int *
   int k = 0;
 
   st[*i] = st_left_corner;
-  X[*i] = x_begin * COEF;
-  Y[*i] = y_begin * COEF;
+  X[*i] = x_begin;
+  Y[*i] = y_begin;
   rig[*i] = *i + 1;
 
   top[*i] = *i + str_len_top;
@@ -17,8 +17,8 @@ void set_str (int *st, double *X, double *Y, int *lef, int *rig, int *bot, int *
   for (k = 1; k < str_len - 1; k++, *i += 1)
     {
       st[*i] = st_middle;
-      X[*i] = (x_begin + k * p_s->h_x) * COEF;
-      Y[*i] = y_begin * COEF;
+      X[*i] = x_begin + k * p_s->h_x;
+      Y[*i] = y_begin;
       lef[*i] = *i - 1;
       rig[*i] = *i + 1;
       top[*i] = *i + str_len_top;
@@ -26,8 +26,8 @@ void set_str (int *st, double *X, double *Y, int *lef, int *rig, int *bot, int *
     }
 
   st[*i] = st_right_corner;
-  X[*i] = (x_begin + k * p_s->h_x) * COEF;
-  Y[*i] = y_begin * COEF;
+  X[*i] = x_begin + k * p_s->h_x;
+  Y[*i] = y_begin;
 
   lef[*i] = *i - 1;
   top[*i] = *i + str_len_top;
@@ -66,39 +66,39 @@ void Setka (int *st, double *X, double *Y, int *lef, int *rig, int *bot, int *to
   fill_1 (top, p_s->Dim);
 
   set_str (st, X, Y, lef, rig, bot, top, p_s,
-           &i, 1, 3, 2, 2 * n - 1,
-           1, 0, 2 * n - 1, 2 * n - 1/*bot[i]<0*/);
+           &i, 1, 5, 2, 2 * n - 1,
+           1 * COEF, 0, 2 * n - 1, 2 * n - 1/*bot[i]<0*/);
 
   for (j = 1; j < 2 * m - 3; j++)
     {
       set_str (st, X, Y, lef, rig, bot, top, p_s,
                &i, 1, 0, 2, 2 * n - 1,
-               1, j * p_s->h_y, 2 * n - 1 , 2 * n - 1);
+               1 * COEF, j * p_s->h_y, 2 * n - 1 , 2 * n - 1);
     }
   set_str (st, X, Y, lef, rig, bot, top, p_s,
            &i, 1, 0, 2, 2 * n - 1,
-           1, j * p_s->h_y, 3 * n - 2 , 2 * n - 1);
+           1 * COEF, j * p_s->h_y, 3 * n - 2 , 2 * n - 1);
 
   set_str (st, X, Y, lef, rig, bot, top, p_s,
-           &i, 4, 5, 5, n - 1,
-           1, 2, 3 * n - 2 , (3 * n - 2) * (m + 1) /*bot[i] < 0*/);
+           &i, 1, 5, 5, n - 1,
+           0, 2 * COEF, 3 * n - 2 , (3 * n - 2) * (m + 1) /*bot[i] < 0*/);
 
   rig[i - 1] = i;
   lef[i] = i - 1;
 
   set_str (st, X, Y, lef, rig, bot, top, p_s,
-           &i, 7, 0, 2, 2 * n - 1,
-           1, 2, 3 * n - 2 , 3 * n - 2);
+           &i, 1, 0, 2, 2 * n - 1,
+           1 * COEF, 2 * COEF, 3 * n - 2 , 3 * n - 2);
 
 
   for (j = 1; j < m - 1; j++)
     {
       set_str (st, X, Y, lef, rig, bot, top, p_s,
                &i, 4, 0, 2, 3 * n - 2,
-               0, 2 + j * p_s->h_y, 3 * n - 2 , 3 * n - 2);
+               0, 2 * COEF + j * p_s->h_y, 3 * n - 2 , 3 * n - 2);
     }
 
   set_str (st, X, Y, lef, rig, bot, top, p_s,
-           &i, 4, 6, 7, 3 * n - 2,
-           0, 3, 3 * n - 2 , 3 * n - 2);
+           &i, 4, 6, 2, 3 * n - 2,
+           0, 3 * COEF, 3 * n - 2 , 3 * n - 2);
 }

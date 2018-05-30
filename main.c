@@ -49,7 +49,7 @@ void correct_array (int n, double *a)
 int main(int argc, char *argv[])
 {
   int it_t, it_sp;
-  int it_t_max = 2, it_sp_max = 2;
+  int it_t_max = 3, it_sp_max = 3;
   int it = 0, it_max;
 
   double *nc_g, *nl2_g;
@@ -118,7 +118,7 @@ int main(int argc, char *argv[])
           Norm_c (it, p_s.Dim, G, V1, V2, X, Y, 1, nc_g, nc_v1, nc_v2);
           Norm_l2 (it, p_s.Dim, G, V1, V2, X, Y, 1, nl2_g, nl2_v1, nl2_v2);
 
-          printf ("Norms C: %e, %e, %e\n", nc_g[it], nc_v1[it], nc_v2[it]);
+          printf ("\n Norms C: %e, %e, %e\n", nc_g[it], nc_v1[it], nc_v2[it]);
           printf ("Norms L2: %e, %e, %e\n", p_s.h_x * nl2_g[it], p_s.h_x * nl2_v1[it], p_s.h_x * nl2_v2[it]);
           it++;
 

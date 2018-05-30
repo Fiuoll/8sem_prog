@@ -185,9 +185,18 @@ else
 #include"./include/nachal.c"
   for (timestep = 0; timestep < p_s->N; timestep++, t += p_s->tau)
     {
+      if (p_s->N > 10 && timestep % (p_s->N / 10) == 0)
+        printf ("|");
 #include"./include/mum.c"
       tt = timestep * tau;
-      for (i = 0, mm = LASPACK, k = p_s->Dim + 1; i < n; i++, mm++)
+      if (LASPACK)
+        {
+          Q_Constr (&A, "A", 3 * n, False, Rowws, Normal, True);
+          V_Constr (&b, "b", 3 * n, Normal, True);
+          V_Constr (&x, "x", 3 * n, Normal, True);
+          SetRTCAccuracy (eps);
+        }
+      for (i = 0, mm = LASPACK, k = 3 * n + 1; i < n; i++, mm++)
         {
 #include"./include/nodeparam.c"
           if (LASPACK)
@@ -224,7 +233,8 @@ else
         }
       if (LASPACK)
         {
-          BiCGSTABIter (&A, &x, &b, MAX_ITER, JacobiPrecond, 1);
+          prepare_to_solve_system_L (&x, G, V1, V2, n);
+          CGSIter (&A, &x, &b, MAX_ITER, JacobiPrecond, 1);
           copy_answer_L (&x, G, V1, V2, p_s);
         }
       else
@@ -232,7 +242,7 @@ else
           ind[mm] = k;
 //          d = new double[7 * 3 * n];
           prepare_to_solve_system (d, G, V1, V2, n);
-          if (solve_system_BICGSTAB_wiki (matrix, ind, rhs, 3 * n, d))
+          if (solve_system_BICGSTAB (matrix, ind, rhs, 3 * n, d))
             {
               return;
             }
