@@ -103,4 +103,6 @@ if (st[i] == 0)
       + thxy * (v1RR + v1LL - v1RL - v1LR) * tmp1
       + tau6 * Func_2(tt, xx, yy, p_d->p_ro, p_d->mu);
   rhs[mm] = tmp;
+
+  continue;
 }

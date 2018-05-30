@@ -189,13 +189,6 @@ else
         printf ("|");
 #include"./include/mum.c"
       tt = timestep * tau;
-      if (LASPACK)
-        {
-          Q_Constr (&A, "A", 3 * n, False, Rowws, Normal, True);
-          V_Constr (&b, "b", 3 * n, Normal, True);
-          V_Constr (&x, "x", 3 * n, Normal, True);
-          SetRTCAccuracy (eps);
-        }
       for (i = 0, mm = LASPACK, k = 3 * n + 1; i < n; i++, mm++)
         {
 #include"./include/nodeparam.c"
@@ -234,7 +227,7 @@ else
       if (LASPACK)
         {
           prepare_to_solve_system_L (&x, G, V1, V2, n);
-          CGSIter (&A, &x, &b, MAX_ITER, JacobiPrecond, 1);
+          BiCGSTABIter (&A, &x, &b, MAX_ITER, JacobiPrecond, 1);
           copy_answer_L (&x, G, V1, V2, p_s);
         }
       else

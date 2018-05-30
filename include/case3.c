@@ -44,4 +44,6 @@ if (st[i] == 3)
   // V1_M = V1_(M-1) + dv2_dy * hy
   tmp = hy * dvdy (tt, xx, yy);
   rhs[mm] = tmp;
+
+  continue;
 }

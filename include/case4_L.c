@@ -38,4 +38,6 @@ if (st[i] == 4)
   Q_SetLen (&A, mm, 1);
   Q_SetEntry (&A, mm, 0, mmv200, 1);
   V_SetCmp (&b, mm, 0);
+
+  continue;
 }

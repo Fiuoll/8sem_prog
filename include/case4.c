@@ -17,4 +17,6 @@ if (st[i] == 4)
   matrix[mm] = 1;
   ind[mm]    = k;
   rhs[mm] = 0;
+
+  continue;
 }

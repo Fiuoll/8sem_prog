@@ -61,7 +61,7 @@ int main(int argc, char *argv[])
   double *workspace_d_2;
 
   double *G, *V1, *V2, *X, *Y;
-  int *st, *M0L, *M0R, *R0M, *L0M;
+  int *st, *M0L, *M0R;
 
   P_gas p_d;
   P_she p_s;
@@ -74,7 +74,7 @@ int main(int argc, char *argv[])
   param_she_step (&p_s, &p_d, it_t_max, it_sp_max);
 
   workspace_d = (double*)malloc(5 * p_s.Dim * sizeof(double));
-  workspace_i = (int*)malloc(5 * p_s.Dim * sizeof(int));
+  workspace_i = (int*)malloc(3 * p_s.Dim * sizeof(int));
 
   if (!workspace_i || !workspace_d)
     return -1;
@@ -87,8 +87,6 @@ int main(int argc, char *argv[])
   st = workspace_i;
   M0L = st + p_s.Dim;
   M0R = M0L + p_s.Dim;
-  L0M = M0R + p_s.Dim;
-  R0M = L0M + p_s.Dim;
 
   workspace_d_2 = (double*)malloc(6 * it_max * sizeof(double));
 
@@ -108,7 +106,7 @@ int main(int argc, char *argv[])
           param_she_step (&p_s, &p_d, it_t, it_sp);
           printf ("Params system: hx = %f, hy = %f, tau = %f\n", p_s.h_x, p_s.h_y, p_s.tau);
           printf ("fill maps\n");
-          Setka (st, X, Y, M0L, M0R, L0M, R0M, &p_s);
+          Setka (st, X, Y, M0L, M0R, &p_s);
           printf ("Computing...\n");
           Shema (G, V1, V2, st, X, Y, M0L, M0R, &p_s, &p_d);
 
@@ -116,10 +114,10 @@ int main(int argc, char *argv[])
           correct_array (p_s.Dim, V1);
           correct_array (p_s.Dim, V2);
           Norm_c (it, p_s.Dim, G, V1, V2, X, Y, 1, nc_g, nc_v1, nc_v2);
-          Norm_l2 (it, p_s.Dim, G, V1, V2, X, Y, 1, nl2_g, nl2_v1, nl2_v2);
+          Norm_l2 (it, p_s.Dim, G, V1, V2, X, Y, 1, nl2_g, nl2_v1, nl2_v2, p_s.h_x, st);
 
           printf ("\n Norms C: %e, %e, %e\n", nc_g[it], nc_v1[it], nc_v2[it]);
-          printf ("Norms L2: %e, %e, %e\n", p_s.h_x * nl2_g[it], p_s.h_x * nl2_v1[it], p_s.h_x * nl2_v2[it]);
+          printf ("Norms L2: %e, %e, %e\n", nl2_g[it], nl2_v1[it], nl2_v2[it]);
           it++;
 
           if (LASPACK && LASResult ())

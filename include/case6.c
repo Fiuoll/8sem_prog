@@ -39,4 +39,6 @@ if (st[i] == 6)
   matrix[mm] = 1;
   ind[mm]    = k;
   rhs[mm] = 0;
+
+  continue;
 }

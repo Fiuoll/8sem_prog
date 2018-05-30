@@ -13,7 +13,7 @@
 #define EPS 1e-16
 #define MAX_ITER 2000
 #define OMEGA 1
-#define COEF 2 * M_PI
+#define COEF  M_PI
 #define LEN 1234
 #define RELEASE 0
 
@@ -30,14 +30,14 @@ void Norm_c (int it, int n,
              double *res_G, double *res_V1, double *res_V2);
 void Norm_l2 (int it, int n,
               double *G, double *V1, double *V2, double *X, double *Y, double t,
-              double *res_G, double *res_V1, double *res_V2);
+              double *res_G, double *res_V1, double *res_V2, double h, int *st);
 
 ///SETKA
-void set_str (int *st, double *X, double *Y, int *lef, int *rig, int *bot, int *top, P_she *p_s,
+void set_str (int *st, double *X, double *Y, int *bot, int *top, P_she *p_s,
               int *i, int st_left_corner, int st_middle, int st_right_corner, int str_len,
               double x_begin, double y_begin, int str_len_top, int str_len_bot);
 void fill_1 (int *x, unsigned int n);
-void Setka (int *st, double *X, double *Y, int *lef, int *rig, int *bot, int *top, P_she *p_s);
+void Setka (int *st, double *X, double *Y, int *bot, int *top, P_she *p_s);
 
 /// functions
 void correct_array (int n, double *a);

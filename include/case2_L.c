@@ -10,7 +10,7 @@ if (st[i] == 2)
   Q_SetEntry (&A, mm, 1, mmgL0, tmp);
   Q_SetEntry (&A, mm, 2, mmv1L0, -thx2);
 
-  tmp = 2 * g00 - thx * g00 *v1L0
+  tmp = 2 * g00 - thx * g00 * v1L0
       - thx * (  //g00 * v100
                - 2.5 * gL0 * v1L0
                + 2 * g_2L * v1_2L
@@ -33,4 +33,6 @@ if (st[i] == 2)
   Q_SetLen (&A, mm, 1);
   Q_SetEntry (&A, mm, 0, mmv200, 1);
   V_SetCmp (&b, mm, 0);
+
+  continue;
 }

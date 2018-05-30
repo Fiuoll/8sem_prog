@@ -38,4 +38,6 @@ if (st[i] == 5)
   matrix[mm] = 1;
   ind[mm]    = k;
   rhs[mm] = 0;
+
+  continue;
 }

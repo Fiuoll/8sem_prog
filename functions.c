@@ -12,16 +12,16 @@ void param_dif (P_gas * p_d)
 void param_she_step (P_she *p_s, P_gas *p_d, int it_t, int it_sp)
 {
   int x, y;
-  int init_x = 3;
-  int init_y = 3;
-  int init_t = 3;
+  int init_x = 20;
+  int init_y = 20;
+  int init_t = 20;
   x = p_s->M_x = init_x * (1 << (it_sp));
   y = p_s->M_y = init_y * (1 << (it_sp));
   p_s->N   = init_t * (1 << (it_t));
   p_s->Dim = (2 * x - 1) *(3 * y - 2) + y * (x - 1);
-  p_s->h_x = p_d->Segm_X / p_s->M_x;
-  p_s->h_y = p_d->Segm_Y / p_s->M_y;
-  p_s->tau = p_d->Segm_T / p_s->N;
+  p_s->h_x = p_d->Segm_X / (p_s->M_x - 1);
+  p_s->h_y = p_d->Segm_Y / (p_s->M_y - 1);
+  p_s->tau = p_d->Segm_T / (p_s->N - 1);
   p_s->eta = 1;
 
 
