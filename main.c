@@ -50,7 +50,8 @@ void correct_array (int n, double *a)
 int main(int argc, char *argv[])
 {
   int it_t, it_sp;
-  int it_t_max = 1, it_sp_max = 1;
+  int it_t_max = RELEASE ? 1 : 3;
+  int it_sp_max = RELEASE ? 1 : 3;
   int it = 0, it_max;
 
   double *nc_g, *nl2_g, *nw_g;

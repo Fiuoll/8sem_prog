@@ -18,7 +18,7 @@
 #define COEF  M_PI
 
 #define LASPACK 1
-#define RELEASE 1
+#define RELEASE 0
 
 /// FOR GNUPLOT
 #define FILE_COMMAND "com.txt"
@@ -97,4 +97,5 @@ void print_V_to_file (P_she *p_s, double *X, double *Y, int n, double *V1, doubl
 void run_gnuplot (P_she *p_s, int time_step, double *X, double *Y, double *G, double *V1, double *V2);
 double get_V_x (double x, double y, double h);
 double get_V_y (double x, double y, double h);
+void clean_png (const char *path);
 

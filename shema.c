@@ -14,7 +14,8 @@ double min (double *array, int n)
 }
 void copy_answer_L (Vector *x, double *G, double *V1, double *V2, P_she *p_s)
 {
-  unsigned int k, i;
+  unsigned int k;
+  int i;
   for (i = 0; i < p_s->Dim; i++)
     {
       k = 3 * (unsigned int)i + 1;
