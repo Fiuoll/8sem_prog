@@ -6,23 +6,31 @@
 #include "laspack/itersolv.h"
 #include "laspack/errhandl.h"
 #include "laspack/rtc.h"
-#include "time.h"
+#include <time.h>
+#include <unistd.h>
 #define STRLEN 1234
-#define LASPACK 1
+#define LEN 1234
+
 #define eps 1e-8
 #define EPS 1e-16
 #define MAX_ITER 2000
 #define OMEGA 1
 #define COEF  M_PI
-#define LEN 1234
-#define RELEASE 0
+
+#define LASPACK 1
+#define RELEASE 1
+
+/// FOR GNUPLOT
+#define FILE_COMMAND "com.txt"
+#define FILE_G "g.txt"
+#define FILE_V "v.txt"
 
 /// PRINTS
 void print_to_file (const char * filename, double *X, double *Y, double * data, int size);
 void print_norm_to_file (FILE *fp, int n, int m, double *array);
 void print_norms_to_file (const char * filename, int n, int m,
                           double *ncg, double *ncv1, double *ncv2,
-                          double *nl2g, double *nl2v1, double *nl2v2);
+                          double *nl2g, double *nl2v1, double *nl2v2, double *nwg, double *nwv1, double *nwv2);
 
 /// NORMS
 void Norm_c (int it, int n,
@@ -31,6 +39,8 @@ void Norm_c (int it, int n,
 void Norm_l2 (int it, int n,
               double *G, double *V1, double *V2, double *X, double *Y, double t,
               double *res_G, double *res_V1, double *res_V2, double h, int *st);
+void Norm_Wl2 (int it, int n, double *G, double *V1, double *V2, double *X, double *Y, double t,
+               double *res_G, double *res_V1, double *res_V2, double h, int *st, int *M0L);
 
 ///SETKA
 void set_str (int *st, double *X, double *Y, int *bot, int *top, P_she *p_s,
@@ -50,6 +60,8 @@ double Func_0 (double t, double x, double y);
 double Func_1 (double t, double x, double y, double p_rho, double mu);
 double Func_2 (double t, double x, double y, double p_rho, double mu);
 double dvdy (double t, double x, double y);
+double inv_g (double t);
+double inv_v1 (double t);
 
 ///SHEMA
 double min (double *array, int n);
@@ -72,3 +84,17 @@ double scalar (int n, double *a, double *b);
 int solve_system_BICGSTAB (double *A, int *I, double *b, int n, double *x);
 
 int solve_system_BICGSTAB_wiki (double *A, int *I, double *b, int n, double *x);
+
+/// GNUPLOT
+void my_sleep (double c);
+void run_gnuplott (void);
+void fill_command_file (const char *val_name, P_she *p_s, int time_step,
+                        const char *val_path);
+void print_paint_pm3d_command (char *path, const char *fname);
+void print_paint_vectors_command (char *path, const char *fname);
+void print_G_to_file (P_she *p_s, double *X, double *Y, int n, double *val, FILE *fp);
+void print_V_to_file (P_she *p_s, double *X, double *Y, int n, double *V1, double *V2, FILE *fp);
+void run_gnuplot (P_she *p_s, int time_step, double *X, double *Y, double *G, double *V1, double *V2);
+double get_V_x (double x, double y, double h);
+double get_V_y (double x, double y, double h);
+

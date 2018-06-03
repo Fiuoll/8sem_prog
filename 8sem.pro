@@ -20,7 +20,8 @@ SOURCES += main.c \
     laspack/rtc.c \
     laspack/vector.c \
     shema.c \
-    solver.c
+    solver.c \
+    gnuplot.c
 
 HEADERS += \
     head.h \

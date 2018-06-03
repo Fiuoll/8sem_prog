@@ -2,7 +2,7 @@
 
 void param_dif (P_gas * p_d)
 {
-  p_d->Segm_T = 1;
+  p_d->Segm_T = 100;
   p_d->Segm_X = COEF;
   p_d->Segm_Y = COEF;
   p_d->p_ro = 10;
@@ -14,7 +14,7 @@ void param_she_step (P_she *p_s, P_gas *p_d, int it_t, int it_sp)
   int x, y;
   int init_x = 20;
   int init_y = 20;
-  int init_t = 20;
+  int init_t = 1000;
   x = p_s->M_x = init_x * (1 << (it_sp));
   y = p_s->M_y = init_y * (1 << (it_sp));
   p_s->N   = init_t * (1 << (it_t));
@@ -36,6 +36,17 @@ void param_she_step (P_she *p_s, P_gas *p_d, int it_t, int it_sp)
   p_s->nz += (9 + 7 + 7 - 3) * ((2 * x - 1 - 2) * (3 * y - 2 - 2) + (x - 1) * (y - 2)); // status 0
 }
 
+double inv_g (double t)
+{
+  (void) t;
+  return 2;
+}
+double inv_v1 (double t)
+{
+  (void) t;
+  return 0.1;
+}
+
 double sm_g (double t, double x, double y)
 {
   if (RELEASE)
@@ -48,14 +59,22 @@ double sm_g (double t, double x, double y)
 double sm_vx (double t, double x, double y)
 {
   if (RELEASE)
-    return 0;
+    {
+      if (y > 2 * M_PI)
+        return 0.1;
+      return 0;
+    }
 
   return sin (x) * sin (y) * exp (t);
 }
 double sm_vy (double t, double x, double y)
 {
   if (RELEASE)
-    return 0;
+    {
+      if (x < M_PI)
+        return 0;
+      return -0.1;
+    }
 
   return sin (x) * sin (y) * exp (-t);
 }
@@ -75,7 +94,7 @@ double dg_dt (double t, double x, double y)
   (void) x;
   (void) y;
   return 1;
-  return sm_g (t, x, y);
+//  return sm_g (t, x, y);
 }
 
 double dg_dx (double t, double x, double y);
@@ -209,6 +228,9 @@ double du1u2_dy (double t, double x, double y)
 }
 double Func_0 (double t, double x, double y)
 {
+  if (RELEASE)
+    return 0;
+
   double tmp = 2 - sm_g (t, x, y);
   double res =
     + dg_dt (t, x, y)
@@ -221,13 +243,14 @@ double Func_0 (double t, double x, double y)
       + du2g_dy (t, x, y)
       + tmp * du2_dy (t, x, y));
 
-  if (RELEASE)
-    return 0;
   return res;
 }
 
 double Func_1 (double t, double x, double y, double p_rho, double mu)
 {
+  if (RELEASE)
+    return 0;
+
   double res =
     + du1_dt (t, x, y)
     + (1. / 3.) * (sm_vx (t, x, y) * du1_dx (t, x, y)
@@ -239,13 +262,15 @@ double Func_1 (double t, double x, double y, double p_rho, double mu)
     - (mu / exp (sm_g (t, x, y))) * ((4. / 3.) * ddu1_dxdx (t, x, y)
                                   + ddu1_dydy (t, x, y)
                                    + (1. / 3.) * (ddu2_dxdy (t, x, y)));
-  if (RELEASE)
-    return 0;
+
   return res;
 }
 
 double Func_2 (double t, double x, double y, double p_rho, double mu)
 {
+  if (RELEASE)
+    return 0;
+
   double res =
       + du2_dt (t, x, y)
       + (1. / 3.) * (sm_vy (t, x, y) * du2_dy (t, x, y)
@@ -257,7 +282,6 @@ double Func_2 (double t, double x, double y, double p_rho, double mu)
       - (mu / exp (sm_g (t, x, y))) * ((4. / 3.) * ddu2_dydy (t, x, y)
                                          + ddu2_dxdx (t, x, y)
                                          + (1. / 3.) * (ddu1_dxdy (t, x, y)));
-  if (RELEASE)
-    return 0;
+
   return res;
 }

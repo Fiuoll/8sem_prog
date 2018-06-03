@@ -165,7 +165,8 @@ int solve_system_BICGSTAB (double *A, int *I, double *b, int n, double *x)
 }
 void set_zero (int n, double *a)
 {
-  for (int i = 0; i < n; i++)
+  int i;
+  for (i = 0; i < n; i++)
     a[i] = 0.;
 }
 

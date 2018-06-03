@@ -17,7 +17,8 @@ if (st[i] == 0)
   Q_SetEntry (&A, mm, 7, mmv1L0, -thx2);
   Q_SetEntry (&A, mm, 8, mmv20L, -thy2);
 
-  tmp = g00 * (4. + thx * (v1R0 - v1L0) + thy * (v20R - v20L)) + tau4 * Func_0(tt, xx, yy);
+  tmp = g00 * (4. + thx * (v1R0 - v1L0) + thy * (v20R - v20L))
+      + tau4 * Func_0(tt, xx, yy);
   V_SetCmp (&b, mm, tmp);
 
   mm++;

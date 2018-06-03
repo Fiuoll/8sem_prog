@@ -58,7 +58,10 @@ void print_norm_to_file (FILE *fp, int n, int m, double *array)
     }
 }
 
-void print_norms_to_file (const char * filename, int n, int m, double *ncg, double *ncv1, double *ncv2, double *nl2g, double *nl2v1, double *nl2v2)
+void print_norms_to_file (const char * filename, int n, int m,
+                          double *ncg, double *ncv1, double *ncv2,
+                          double *nl2g, double *nl2v1, double *nl2v2,
+                          double *nwg, double *nwv1, double *nwv2)
 {
   FILE *fp;
   char buf[STRLEN];
@@ -73,16 +76,24 @@ void print_norms_to_file (const char * filename, int n, int m, double *ncg, doub
 
   fprintf (fp, "\n||G||_c \n");
   print_norm_to_file (fp, n, m, ncg);
-  fprintf (fp, "\n||Vx||_c \n");
-  print_norm_to_file (fp, n, m, ncv1);
-  fprintf (fp, "\n||Vy||_c \n");
-  print_norm_to_file (fp, n, m, ncv2);
   fprintf (fp, "\n||G||_L2 \n");
   print_norm_to_file (fp, n, m, nl2g);
+  fprintf (fp, "\n||G||_WL2 \n");
+  print_norm_to_file (fp, n, m, nwg);
+
+  fprintf (fp, "\n||Vx||_c \n");
+  print_norm_to_file (fp, n, m, ncv1);
   fprintf (fp, "\n||Vx||_L2 \n");
   print_norm_to_file (fp, n, m, nl2v1);
+  fprintf (fp, "\n||Vx||_WL2 \n");
+  print_norm_to_file (fp, n, m, nwv1);
+
+  fprintf (fp, "\n||Vy||_c \n");
+  print_norm_to_file (fp, n, m, ncv2);
   fprintf (fp, "\n||Vy||_L2 \n");
   print_norm_to_file (fp, n, m, nl2v2);
+  fprintf (fp, "\n||Vy||_WL2 \n");
+  print_norm_to_file (fp, n, m, nwv2);
 
   fclose (fp);
 }
