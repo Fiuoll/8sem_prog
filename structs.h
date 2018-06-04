@@ -21,8 +21,11 @@ typedef struct
   double h_y;
   double tau;
   double eta;
+  double gamma;
   double influx_vel;
   double influx_rho;
+
+  int S_DimH;
 } P_she;
 
 

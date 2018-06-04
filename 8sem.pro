@@ -21,7 +21,9 @@ SOURCES += main.c \
     laspack/vector.c \
     shema.c \
     solver.c \
-    gnuplot.c
+    gnuplot.c \
+    shema_s.c \
+    setka_s.c
 
 HEADERS += \
     head.h \

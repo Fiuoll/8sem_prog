@@ -60,7 +60,7 @@ void Setka (int *st, double *X, double *Y, int *bot, int *top, P_she *p_s)
   fill_1 (top, p_s->Dim);
 
   set_str (st, X, Y, bot, top, p_s,
-           &i, 7, 3, 7, 2 * n - 1,
+           &i, 7, 3, 2, 2 * n - 1,
            1 * COEF, 0, 2 * n - 1, 2 * n - 1/*bot[i]<0*/);
 
   for (j = 1; j < 2 * m - 3; j++)
@@ -90,6 +90,8 @@ void Setka (int *st, double *X, double *Y, int *bot, int *top, P_she *p_s)
     }
 
   set_str (st, X, Y, bot, top, p_s,
-           &i, 7, 6, 7, 3 * n - 2,
+           &i, 7, 6, 2, 3 * n - 2,
            0, 3 * COEF, 3 * n - 2 , 3 * n - 2);
+
+  printf ("fill maps\n");
 }

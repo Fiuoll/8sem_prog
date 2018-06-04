@@ -20,7 +20,21 @@ void prepare_to_solve_system_L (Vector *d, double *G, double *V1, double *V2, in
       V_SetCmp (d, 3 * i + 3, V2[i]);
     }
 }
-
+void prepare_to_solve_system_L_V (Vector *d, double *V1, double *V2, int n)
+{
+  int i;
+  for (i = 0; i < n; i++)
+    {
+      V_SetCmp (d, 2 * i + 1, V1[i]);
+      V_SetCmp (d, 2 * i + 2, V2[i]);
+    }
+}
+void prepare_to_solve_system_L_H (Vector *d, double *G, int n)
+{
+  int i;
+  for (i = 0; i < n; i++)
+    V_SetCmp (d, i + 1, G[i]);
+}
 /////////////////////////////////////////////////////////////////////////////
 // preconditioner Jacobi
 int precond_matrix (int n, double *A, int * I)

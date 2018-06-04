@@ -1,4 +1,4 @@
-          mmg00 = mm;
+          mmg00 = 3 * i + LASPACK;
           mmv100 = mm + 1;
           mmv200 = mm + 2;
 
@@ -26,13 +26,14 @@
           switch (st[i])
           {
             case 0:
-              mmgL0 = mm - 3;
-              mmv1L0 = mm - 2;
-              mmv2L0 = mm - 1;
+              mmgL0 = mmg00 - 3;
+              mmgR0 = mmg00 + 3;
 
-              mmgR0 = mm + 3;
-              mmv1R0 = mm + 4;
-              mmv2R0 = mm + 5;
+              mmv1L0 = mmv100 - 3;
+              mmv2L0 = mmv200 - 3;
+
+              mmv1R0 = mmv100 + 3;
+              mmv2R0 = mmv200 + 3;
 
               mmg0L = 3 * M0L[i] + LASPACK;
               mmv10L = mmg0L + 1;

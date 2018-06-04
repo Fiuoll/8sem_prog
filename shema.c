@@ -75,6 +75,9 @@ else
 
 #include"./include/viraj.c"
 #include"./include/nachal.c"
+
+printf ("Computing...\n");
+
   for (timestep = 0; timestep < p_s->N; timestep++, t += p_s->tau)
     {
       if (p_s->N > 10 && timestep % (p_s->N / 10) == 0)

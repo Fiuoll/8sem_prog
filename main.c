@@ -64,6 +64,8 @@ int main(int argc, char *argv[])
 
   double *G, *V1, *V2, *X, *Y;
   int *st, *M0L, *M0R;
+  int *H_st, *H_M0L, *H_M0R;
+  double *H_X, *H_Y;
 
   P_gas p_d;
   P_she p_s;
@@ -75,8 +77,8 @@ int main(int argc, char *argv[])
 
   param_she_step (&p_s, &p_d, it_t_max, it_sp_max);
 
-  workspace_d = (double*)malloc(5 * p_s.Dim * sizeof(double));
-  workspace_i = (int*)malloc(3 * p_s.Dim * sizeof(int));
+  workspace_d = (double*)malloc(5 * p_s.Dim * sizeof(double) + 2 * p_s.S_DimH * sizeof (double));
+  workspace_i = (int*)malloc(3 * p_s.Dim * sizeof(int) + 3 * p_s.S_DimH * sizeof (int));
 
   if (!workspace_i || !workspace_d)
     return -1;
@@ -85,10 +87,15 @@ int main(int argc, char *argv[])
   V2 = V1 + p_s.Dim;
   X = V2 + p_s.Dim;
   Y = X + p_s.Dim;
+  H_X = Y + p_s.S_DimH;
+  H_Y = H_X + p_s.S_DimH;
 
   st = workspace_i;
   M0L = st + p_s.Dim;
   M0R = M0L + p_s.Dim;
+  H_st = M0R + p_s.S_DimH;
+  H_M0L = H_st + p_s.S_DimH;
+  H_M0R = H_M0L + p_s.S_DimH;
 
   workspace_d_2 = (double*)malloc(9 * it_max * sizeof(double));
 
@@ -115,11 +122,18 @@ int main(int argc, char *argv[])
 
           printf ("time it = %d, sp it = %d \n", it_t, it_sp);
           param_she_step (&p_s, &p_d, it_t, it_sp);
-          printf ("Params system: hx = %f, hy = %f, tau = %f\n", p_s.h_x, p_s.h_y, p_s.tau);
-          printf ("fill maps\n");
-          Setka (st, X, Y, M0L, M0R, &p_s);
-          printf ("Computing...\n");
-          Shema (G, V1, V2, st, X, Y, M0L, M0R, &p_s, &p_d);
+
+          if (SOKOLOV)
+            {
+              Setka_S (H_st, H_X, H_Y, H_M0L, H_M0R, &p_s);
+              Setka (st, X, Y, M0L, M0R, &p_s);
+              Shema_S (G, H_st, H_X, H_Y, H_M0L, H_M0R, V1, V2, st, X, Y, M0L, M0R, &p_s, &p_d);
+            }
+          else
+            {
+              Setka (st, X, Y, M0L, M0R, &p_s);
+              Shema (G, V1, V2, st, X, Y, M0L, M0R, &p_s, &p_d);
+            }
 
           if (!RELEASE)
             {
