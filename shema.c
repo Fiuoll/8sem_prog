@@ -38,7 +38,6 @@ void copy_answer (double *x, double *G, double *V1, double *V2, P_she *p_s)
 
 void Shema (double *G, double *V1, double *V2, int *st, double *X, double *Y, int *M0L, int *M0R, P_she *p_s, P_gas *p_d)
 {
-  double t = 0;
   int timestep;
   int n, nz, k;
   int i;
@@ -77,8 +76,12 @@ else
 #include"./include/nachal.c"
 
 printf ("Computing...\n");
+if (RELEASE)
+  {
+    run_gnuplot (p_s, 0, X, Y, G, V1, V2);
+  }
 
-  for (timestep = 0; timestep < p_s->N; timestep++, t += p_s->tau)
+  for (timestep = 1; timestep < p_s->N; timestep++)
     {
       if (p_s->N > 10 && timestep % (p_s->N / 10) == 0)
         printf ("|");

@@ -1,0 +1,263 @@
+\section{Тестирование на гладком решении}
+Рассмотрим функции:
+$$
+	u_1 (t, x_1, x_2) = \sin(x_1) \sin(x_2) \exp^t \\
+$$
+$$
+	u_2 (t, x_1, x_2) = \sin(x_1) \sin(x_2) \exp^{-t} \\
+$$
+$$
+	\rho (t, x_1, x_2) = (\cos(x_1) + 1.5) (\cos(x_2) + 1.5) \exp^{t}
+$$
+Сделаем эти функции решением задачи, путем определения функций $f_0, f_1, f_2$.
+
+\subsection{Тест №1}
+Посмотрим на нормы отклонения решения новой задачи от известного ответа.
+Параметры $\mu = 0.1$
+
+\begin{center}
+	$||G - g||_c$
+	\begin{tabular}{|c|c|c|c|}
+		\hline 
+		N  M& 20& 40& 80\\ 
+		\hline 
+		20 & 2.226118e-001 & 2.229332e-001 & 2.227963e-001 \\ \hline 
+		40 & 1.625185e-001 & 1.490928e-001 & 1.470278e-001 \\ \hline 
+		80 & 1.183744e-001 & 9.780931e-002 & 9.399656e-002 \\ \hline 
+		\hline 
+	\end{tabular} 
+\end{center} 
+\begin{center}
+	$||G - g||_{L2}$
+	\begin{tabular}{|c|c|c|c|}
+		\hline 
+		N  M& 20& 40& 80\\ 
+		\hline 
+		20 & 7.881502e-001 & 7.760840e-001 & 7.732262e-001 \\ \hline 
+		40 & 4.415166e-001 & 4.242142e-001 & 4.205404e-001 \\ \hline 
+		80 & 2.506339e-001 & 2.275291e-001 & 2.231311e-001 \\ \hline 
+		\hline 
+	\end{tabular} 
+\end{center} 
+\begin{center}
+	$||G - g||_{2}^1$
+	\begin{tabular}{|c|c|c|c|}
+		\hline 
+		N  M& 20& 40& 80\\ 
+		\hline 
+		20 & 1.084773e+000 & 9.429816e-001 & 8.630577e-001 \\ \hline 
+		40 & 8.963833e-001 & 6.988282e-001 & 5.777637e-001 \\ \hline 
+		80 & 8.348985e-001 & 6.072825e-001 & 4.586836e-001 \\ \hline 
+		\hline 
+	\end{tabular} 
+\end{center} 
+\begin{center}
+	$||V1 - u1||_c$
+	\begin{tabular}{|c|c|c|c|}
+		\hline 
+		N  M& 20& 40& 80\\ 
+		\hline 
+		20 & 3.587106e-001 & 3.571893e-001 & 3.567833e-001 \\ \hline 
+		40 & 2.256584e-001 & 2.184677e-001 & 2.163800e-001 \\ \hline 
+		80 & 1.369765e-001 & 1.258933e-001 & 1.232229e-001 \\ \hline 
+		\hline 
+	\end{tabular} 
+\end{center} 
+\begin{center}
+	$||V1 - u1||_{L2}$
+	\begin{tabular}{|c|c|c|c|}
+		\hline 
+		N  M& 20& 40& 80\\ 
+		\hline 
+		20 & 1.134281e+000 & 1.140679e+000 & 1.141334e+000 \\ \hline 
+		40 & 6.427172e-001 & 6.415121e-001 & 6.406866e-001 \\ \hline 
+		80 & 3.519757e-001 & 3.443347e-001 & 3.429484e-001 \\ \hline 
+		\hline 
+	\end{tabular} 
+\end{center} 
+\begin{center}
+	$||V1 - u1||_{2}^1$
+	\begin{tabular}{|c|c|c|c|}
+		\hline 
+		N  M& 20& 40& 80\\ 
+		\hline 
+		20 & 3.280914e+000 & 2.436311e+000 & 1.895991e+000 \\ \hline 
+		40 & 3.259879e+000 & 2.327238e+000 & 1.699085e+000 \\ \hline 
+		80 & 3.289118e+000 & 2.316687e+000 & 1.647871e+000 \\ \hline 
+		\hline 
+	\end{tabular} 
+\end{center} 
+\begin{center}
+	$||V2 - u2||_c$
+	\begin{tabular}{|c|c|c|c|}
+		\hline 
+		N  M& 20& 40& 80\\ 
+		\hline 
+		20 & 1.371596e-001 & 1.369522e-001 & 1.368953e-001 \\ \hline 
+		40 & 8.303557e-002 & 8.094133e-002 & 8.068471e-002 \\ \hline 
+		80 & 4.801745e-002 & 4.463771e-002 & 4.431233e-002 \\ \hline 
+		\hline 
+	\end{tabular} 
+\end{center} 
+\begin{center}
+	$||V2 - u2||_{L2}$
+	\begin{tabular}{|c|c|c|c|}
+		\hline 
+		N  M& 20& 40& 80\\ 
+		\hline 
+		20 & 4.394355e-001 & 4.301333e-001 & 4.274454e-001 \\ \hline 
+		40 & 2.549795e-001 & 2.423606e-001 & 2.393553e-001 \\ \hline 
+		80 & 1.468379e-001 & 1.316099e-001 & 1.282802e-001 \\ \hline 
+		\hline 
+	\end{tabular} 
+\end{center} 
+\begin{center}
+	$||V2 - u2||_{2}^1$
+	\begin{tabular}{|c|c|c|c|}
+		\hline 
+		N  M& 20& 40& 80\\ 
+		\hline 
+		20 & 7.274666e-001 & 5.903824e-001 & 5.133909e-001 \\ \hline 
+		40 & 5.846181e-001 & 4.389401e-001 & 3.513036e-001 \\ \hline 
+		80 & 5.165372e-001 & 3.677427e-001 & 2.729441e-001 \\ \hline 
+		\hline 
+	\end{tabular} 
+\end{center} 
+\begin{center}
+	TIME
+	\begin{tabular}{|c|c|c|c|}
+		\hline 
+		N  M& 20& 40& 80\\ 
+		\hline 
+		20 & 1.052000e+000 & 2.323400e+001 & 7.398490e+002 \\ \hline 
+		40 & 1.314000e+000 & 1.189100e+001 & 3.979780e+002 \\ \hline 
+		80 & 2.237000e+000 & 1.377600e+001 & 1.624820e+002 \\ \hline 
+		\hline 
+	\end{tabular} 
+\end{center} 
+
+Также для $\mu$ = 0.001
+
+\begin{center}
+	$||G - g||_c$
+	\begin{tabular}{|c|c|c|c|}
+		\hline 
+		N  M& 20& 40& 80\\ 
+		\hline 
+		20 & 2.295651e-001 & 2.296185e-001 & 2.295576e-001 \\ \hline 
+		40 & 1.734755e-001 & 1.582878e-001 & 1.558701e-001 \\ \hline 
+		80 & 1.294093e-001 & 1.058871e-001 & 1.014020e-001 \\ \hline 
+		\hline 
+	\end{tabular} 
+\end{center} 
+\begin{center}
+	$||G - g||_{L2}$
+	\begin{tabular}{|c|c|c|c|}
+		\hline 
+		N  M& 20& 40& 80\\ 
+		\hline 
+		20 & 8.093506e-001 & 7.970034e-001 & 7.940868e-001 \\ \hline 
+		40 & 4.560944e-001 & 4.381071e-001 & 4.343242e-001 \\ \hline 
+		80 & 2.609654e-001 & 2.362643e-001 & 2.316317e-001 \\ \hline 
+		\hline 
+	\end{tabular} 
+\end{center} 
+\begin{center}
+	$||G - g||_{2}^1$
+	\begin{tabular}{|c|c|c|c|}
+		\hline 
+		N  M& 20& 40& 80\\ 
+		\hline 
+		20 & 1.100853e+000 & 9.602130e-001 & 8.817495e-001 \\ \hline 
+		40 & 9.064776e-001 & 7.080743e-001 & 5.882787e-001 \\ \hline 
+		80 & 8.435808e-001 & 6.122108e-001 & 4.637969e-001 \\ \hline 
+		\hline 
+	\end{tabular} 
+\end{center} 
+\begin{center}
+	$||V1 - u1||_c$
+	\begin{tabular}{|c|c|c|c|}
+		\hline 
+		N  M& 20& 40& 80\\ 
+		\hline 
+		20 & 3.671916e-001 & 3.653109e-001 & 3.647147e-001 \\ \hline 
+		40 & 2.335176e-001 & 2.258276e-001 & 2.236546e-001 \\ \hline 
+		80 & 1.449530e-001 & 1.317125e-001 & 1.289101e-001 \\ \hline 
+		\hline 
+	\end{tabular} 
+\end{center} 
+\begin{center}
+	$||V1 - u1||_{L2}$
+	\begin{tabular}{|c|c|c|c|}
+		\hline 
+		N  M& 20& 40& 80\\ 
+		\hline 
+		20 & 1.175211e+000 & 1.180273e+000 & 1.180626e+000 \\ \hline 
+		40 & 6.724330e-001 & 6.690932e-001 & 6.678500e-001 \\ \hline 
+		80 & 3.722931e-001 & 3.617727e-001 & 3.598263e-001 \\ \hline 
+		\hline 
+	\end{tabular} 
+\end{center} 
+\begin{center}
+	$||V1 - u1||_{2}^1$
+	\begin{tabular}{|c|c|c|c|}
+		\hline 
+		N  M& 20& 40& 80\\ 
+		\hline 
+		20 & 3.285783e+000 & 2.448737e+000 & 1.915902e+000 \\ \hline 
+		40 & 3.257332e+000 & 2.329246e+000 & 1.705743e+000 \\ \hline 
+		80 & 3.283435e+000 & 2.314672e+000 & 1.648520e+000 \\ \hline 
+		\hline 
+	\end{tabular} 
+\end{center} 
+\begin{center}
+	$||V2 - u2||_c$
+	\begin{tabular}{|c|c|c|c|}
+		\hline 
+		N  M& 20& 40& 80\\ 
+		\hline 
+		20 & 1.486234e-001 & 1.483809e-001 & 1.484719e-001 \\ \hline 
+		40 & 9.080801e-002 & 8.918637e-002 & 8.901185e-002 \\ \hline 
+		80 & 5.265125e-002 & 4.970741e-002 & 4.947207e-002 \\ \hline 
+		\hline 
+	\end{tabular} 
+\end{center} 
+\begin{center}
+	$||V2 - u2||_{L2}$
+	\begin{tabular}{|c|c|c|c|}
+		\hline 
+		N  M& 20& 40& 80\\ 
+		\hline 
+		20 & 4.566881e-001 & 4.476253e-001 & 4.450511e-001 \\ \hline 
+		40 & 2.665928e-001 & 2.540846e-001 & 2.511399e-001 \\ \hline 
+		80 & 1.540339e-001 & 1.387124e-001 & 1.354231e-001 \\ \hline 
+		\hline 
+	\end{tabular} 
+\end{center} 
+\begin{center}
+	$||V2 - u2||_{2}^1$
+	\begin{tabular}{|c|c|c|c|}
+		\hline 
+		N  M& 20& 40& 80\\ 
+		\hline 
+		20 & 7.422675e-001 & 6.059374e-001 & 5.297091e-001 \\ \hline 
+		40 & 5.925206e-001 & 4.476225e-001 & 3.608399e-001 \\ \hline 
+		80 & 5.197034e-001 & 3.715334e-001 & 2.773302e-001 \\ \hline 
+		\hline 
+	\end{tabular} 
+\end{center} 
+\begin{center}
+	TIME
+	\begin{tabular}{|c|c|c|c|}
+		\hline 
+		N  M& 20& 40& 80\\ 
+		\hline 
+		20 & 1.061000e+000 & 2.376200e+001 & 7.503460e+002 \\ \hline 
+		40 & 1.327000e+000 & 1.200800e+001 & 3.707330e+002 \\ \hline 
+		80 & 2.211000e+000 & 1.397100e+001 & 1.627290e+002 \\ \hline 
+		\hline 
+	\end{tabular} 
+\end{center} 
+
+По данным таблицам можно видеть, что уменьшение вязкости немного ухудшает расчет.
+Также по $L_2$ норме хорошо виднен порядок схемы $\tau + h^2$.

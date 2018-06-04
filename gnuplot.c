@@ -62,7 +62,7 @@ void print_G_to_file (P_she *p_s, double *X, double *Y, int n, double *G, FILE *
   int top = 3 * M;
   for (i = 0; i < top; i++, x += h)
     {
-      for (j = 0; j < n; j++)
+      for (j = n - 1; j > -1; j--)
         {
           if (fabs (x - X[j]) > 1e-12)
             continue;
@@ -82,7 +82,7 @@ void print_V_to_file (P_she *p_s, double *X, double *Y, int n, double *V1, doubl
   int top = 3 * M;
   for (i = 0; i < top; i++, x += h)
     {
-      for (j = 0; j < n; j++)
+      for (j = n - 1; j > -1; j--)
         {
           if (fabs (x - X[j]) > 1e-12)
             continue;

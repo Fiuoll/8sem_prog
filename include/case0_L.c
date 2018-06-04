@@ -41,7 +41,7 @@ if (st[i] == 0)
   tmp = v100 * (6. + thy32 * (v20R - v20L))
       - (MUM - tmp1) * (thxx8 * (v1R0 - 2 * v100 + v1L0) + thyy6 * (v10R - 2 * v100 + v10L))
       + thxy * (v2RR + v2LL - v2RL - v2LR) * tmp1
-      + tau6 * Func_1(tt, xx, yy, p_d->p_ro, p_d->mu);
+      + tau6 * Func_1(tt, xx, yy, pressure, mu);
   V_SetCmp (&b, mm, tmp);
 
   mm++;
@@ -63,7 +63,7 @@ if (st[i] == 0)
   tmp = v200 * (6. + thx32 * (v1R0 - v1L0))
       - (MUM - tmp1) * (thxx6 * (v2R0 - 2 * v200 + v2L0) + thyy8 * (v20R - 2 * v200 + v20L))
       + thxy * (v1RR + v1LL - v1RL - v1LR) * tmp1
-      + tau6 * Func_2(tt, xx, yy, p_d->p_ro, p_d->mu);
+      + tau6 * Func_2(tt, xx, yy, pressure, mu);
   V_SetCmp (&b, mm, tmp);
 
   continue;

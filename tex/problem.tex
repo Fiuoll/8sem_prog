@@ -1,0 +1,28 @@
+\section{Постановкa дифференциальной задачи}
+
+Нестационарное двумерное движение вязкого баротропного газа описывается системой уравнений
+$$
+\begin{array}{l}
+\cfrac{\partial \rho}{\partial t} + \cfrac{\partial \rho u_1}{\partial x_1}+ \cfrac{\partial \rho u_2}{\partial x_2} = 0, \\
+\cfrac{\partial \rho u_1}{\partial t} + \cfrac{\partial \rho u_1^2}{\partial x_1} + \cfrac{\partial \rho u_1 u_2}{\partial x_2} 
+	+ \cfrac{\partial p}{\partial x_1} 
+	= \mu \Big(\cfrac{4}{3}\cfrac{\partial^2 u_1}{\partial x_1^2} + \cfrac{\partial^2 u_1}{\partial x_2^2}
+	+  \cfrac{1}{3}\cfrac{\partial^2 u_2}{\partial x_1\partial x_2} \Big) + \rho f_1, \\
+\cfrac{\partial \rho u_2}{\partial t} + \cfrac{\partial \rho u_1 u_2}{\partial x_1} + \cfrac{\partial \rho u_2^2}{\partial x_2}
+	+ \cfrac{\partial p}{\partial x_2} 
+	= \mu \Big(\cfrac{1}{3}\cfrac{\partial^2 u_1}{\partial x_1\partial x_2} + \cfrac{\partial^2 u_2}{\partial x_1^2}
+	+  \cfrac{4}{3}\cfrac{\partial^2 u_2}{\partial^2 x_2} \Big) + \rho f_2, \\
+p = p (\rho),
+\end{array}
+$$
+где $\mu$ - коэффициент вязкости газа (известная неотрицательная константа), $p$ - давление газа (известная функция), $f$ - вектор внешних сил
+(также известная функция от переменных Эйлера, см. ниже).
+
+Неизвестные функции: плотность $\rho$ и вектор скорости $u$ являются функциями переменных Эйлера 
+\begin{gather*}
+(t, x) \in Q = [0, T] \times \Omega.
+\end{gather*}
+
+Граничные условия для неизвестного решения: $\rho|_{\Gamma^-} = \rho_{\gamma} = 1,\quad u_1|_{\Gamma^-} = \omega \in \{0,1;\  1\},\quad \cfrac{\partial u_1}{\partial x_1}\Big|_{\Gamma^+} = 0$. На оставшейся границе компоненты скорости равны нулю, а функция плотности считается неизвестной.
+
+Для решения задачи вводится равномерная сетка с шагом $h_x$ по оси X, $h_y$ по оси Y, $\tau$ по времени.

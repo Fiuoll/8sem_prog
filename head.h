@@ -16,9 +16,11 @@
 #define MAX_ITER 2000
 #define OMEGA 1
 #define COEF  M_PI
+#define INIT_X 20
+#define INIT_T 500
 
 #define LASPACK 1
-#define RELEASE 0
+#define RELEASE 1
 #define SOKOLOV 0
 
 /// FOR GNUPLOT
@@ -31,7 +33,7 @@ void print_to_file (const char * filename, double *X, double *Y, double * data, 
 void print_norm_to_file (FILE *fp, int n, int m, double *array);
 void print_norms_to_file (const char * filename, int n, int m,
                           double *ncg, double *ncv1, double *ncv2,
-                          double *nl2g, double *nl2v1, double *nl2v2, double *nwg, double *nwv1, double *nwv2);
+                          double *nl2g, double *nl2v1, double *nl2v2, double *nwg, double *nwv1, double *nwv2, double *time);
 
 /// NORMS
 void Norm_c (int it, int n,
@@ -109,4 +111,4 @@ int is_zero (double a);
 void copy_answer_L_H (Vector *x, double *G, int n);
 void copy_answer_L_V (Vector *x, double *V1, double *V2, int n);
 void prepare_to_solve_system_L_H (Vector *d, double *G, int n);
-void prepare_to_solve_system_L_V (Vector *d, double *V1, double *V2, int n);;
+void prepare_to_solve_system_L_V (Vector *d, double *V1, double *V2, int n);

@@ -33,11 +33,21 @@ if (st[i] == 3)
   //V2
   if (RELEASE)
     {
-      Q_SetLen (&A, mm, 2);
-      Q_SetEntry (&A, mm, 0, mmv200, 1);
-      Q_SetEntry (&A, mm, 1, mmv20R, -1);
-      tmp = 0;
-      V_SetCmp (&b, mm, tmp);
+      if (v20R < 0)
+        {
+          Q_SetLen (&A, mm, 2);
+          Q_SetEntry (&A, mm, 0, mmv200, 1);
+          Q_SetEntry (&A, mm, 1, mmv20R, -1);
+          tmp = 0;
+          V_SetCmp (&b, mm, tmp);
+        }
+      else
+        {
+
+          Q_SetLen (&A, mm, 1);
+          Q_SetEntry (&A, mm, 0, mmv200, 1);
+          V_SetCmp (&b, mm, 0);
+        }
     }
   else
     {

@@ -43,6 +43,35 @@ void print_to_file_both (const char * filename, double *X, double*Y, double *dat
 
   fclose (fp);
 }
+void print_table (FILE *fp, const char *table_name, int n, int m, double *a)
+{
+  int i, j;
+  fprintf (fp, "\\begin{center}\n");
+  fprintf (fp, "%s\n", table_name);
+
+  fprintf (fp, "\\begin{tabular}{|c|");
+  for (i = 0; i < n; i++)
+    fprintf (fp, "c|");
+  fprintf (fp, "}\n");
+  fprintf (fp, "\\hline \n");
+  fprintf (fp, "N  M");
+  for (i = 0;i < n; i++)
+    fprintf (fp, "& %d", INIT_X * (1 << i));
+  fprintf (fp, "\\\\ \n");
+  fprintf (fp, "\\hline \n");
+  for (i =  0; i < n; i++)
+    {
+      fprintf (fp, "%d ", INIT_T * (1 << i));
+      for (j = 0; j < m; j++)
+        {
+          fprintf (fp, "& %e ", a[i * m + j]);
+        }
+      fprintf(fp, "\\\\ \\hline \n");
+    }
+  fprintf (fp, "\\hline \n");
+  fprintf (fp, "\\end{tabular} \n");
+  fprintf (fp, "\\end{center} \n");
+}
 
 void print_norm_to_file (FILE *fp, int n, int m, double *array)
 {
@@ -61,7 +90,7 @@ void print_norm_to_file (FILE *fp, int n, int m, double *array)
 void print_norms_to_file (const char * filename, int n, int m,
                           double *ncg, double *ncv1, double *ncv2,
                           double *nl2g, double *nl2v1, double *nl2v2,
-                          double *nwg, double *nwv1, double *nwv2)
+                          double *nwg, double *nwv1, double *nwv2, double *time)
 {
   FILE *fp;
   char buf[STRLEN];
@@ -73,27 +102,20 @@ void print_norms_to_file (const char * filename, int n, int m,
       snprintf (buf, STRLEN, "%s: %s\n", filename, "Cannot open file!");
       return;
     }
+  print_table (fp, "$||G - g||_c$", n, m, ncg);
+  print_table (fp, "$||G - g||_{L2}$", n, m, nl2g);
+  print_table (fp, "$||G - g||_{2}^1$", n, m, nwg);
 
-  fprintf (fp, "\n||G||_c \n");
-  print_norm_to_file (fp, n, m, ncg);
-  fprintf (fp, "\n||G||_L2 \n");
-  print_norm_to_file (fp, n, m, nl2g);
-  fprintf (fp, "\n||G||_WL2 \n");
-  print_norm_to_file (fp, n, m, nwg);
 
-  fprintf (fp, "\n||Vx||_c \n");
-  print_norm_to_file (fp, n, m, ncv1);
-  fprintf (fp, "\n||Vx||_L2 \n");
-  print_norm_to_file (fp, n, m, nl2v1);
-  fprintf (fp, "\n||Vx||_WL2 \n");
-  print_norm_to_file (fp, n, m, nwv1);
+  print_table (fp, "$||V1 - u1||_c$", n, m, ncv1);
+  print_table (fp, "$||V1 - u1||_{L2}$", n, m, nl2v1);
+  print_table (fp, "$||V1 - u1||_{2}^1$", n, m, nwv1);
 
-  fprintf (fp, "\n||Vy||_c \n");
-  print_norm_to_file (fp, n, m, ncv2);
-  fprintf (fp, "\n||Vy||_L2 \n");
-  print_norm_to_file (fp, n, m, nl2v2);
-  fprintf (fp, "\n||Vy||_WL2 \n");
-  print_norm_to_file (fp, n, m, nwv2);
+  print_table (fp, "$||V2 - u2||_c$", n, m, ncv2);
+  print_table (fp, "$||V2 - u2||_{L2}$", n, m, nl2v2);
+  print_table (fp, "$||V2 - u2||_{2}^1$", n, m, nwv2);
+
+  print_table (fp, "TIME", n, m, time);
 
   fclose (fp);
 }

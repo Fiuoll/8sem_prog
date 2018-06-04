@@ -12,18 +12,18 @@ else
   k = 1;
   if (v1s2 < 0)
   {
-   if (fabs (v1s2R) > EPS)
+   if (!is_zero (v1s2R))
      k++;
   }
- else if (fabs (v1s2) > EPS)
+ else if (!is_zero (v1s2))
      k++;
 
   if (v2s1 < 0)
   {
-    if (fabs (v2s1T) > EPS)
+    if (!is_zero (v2s1T))
       k++;
   }
- else if (fabs (v2s1) > EPS)
+ else if (!is_zero (v2s1))
      k++;
 
   Q_SetLen(&AH, mmg00, k);
@@ -33,13 +33,13 @@ else
 
   if (v1s2 < 0)
    {
-    if (fabs (v1s2R) > EPS)
+    if (!is_zero (v1s2R))
       Q_SetEntry (&AH, mmg00, k++, mmgR0, thx * v1s2R);
     tmp += -thx * v1s2;
    }
   else
    {
-     if (fabs (v1s2) > EPS)
+     if (!is_zero (v1s2))
        Q_SetEntry (&AH, mmg00, k++, mmgL0, -thx * v1s2);
     tmp += thx * v1s2R;
 
@@ -49,13 +49,13 @@ else
 
   if (v2s1 < 0)
    {
-     if (fabs (v2s1T) > EPS)
+     if (!is_zero (v2s1T))
        Q_SetEntry (&AH, mmg00, k++, mmg0R, thy * v2s1T);
     tmp += -thy * v2s1;
    }
   else
    {
-    if (fabs (v2s1) > EPS)
+    if (!is_zero (v2s1))
       Q_SetEntry (&AH, mmg00, k++, mmg0L, -thy * v2s1);
     tmp += thy * v2s1T;
    }

@@ -77,7 +77,7 @@ else
 
 printf ("Computing...\n");
 
-  for (timestep = 0; timestep < p_s->N; timestep++, t += p_s->tau)
+  for (timestep = 1; timestep < p_s->N; timestep++)
     {
       if (p_s->N > 10 && timestep % (p_s->N / 10) == 0)
         printf ("|");
