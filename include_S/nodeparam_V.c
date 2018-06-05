@@ -52,18 +52,22 @@
             hs2  = (H[j] + H[M0L_H[j]]) / 2;
             if (!is_zero (v1R0) && !is_zero (v2R0))
                 hs2R = (H[j + 1] + H[M0L_H[j + 1]]) / 2;
+            else
+              hs2R = 0;
             hs2L = (H[j - 1] + H[M0L_H[j - 1]]) / 2;
             hs1  = (H[j] + H[j - 1]) / 2;
             hs1B = (H[M0L_H[j]] + H[M0L_H[j - 1]]) / 2;
             if (!is_zero (v10R) && !is_zero (v20R))
               hs1T = (H[M0R_H[j]] + H[M0R_H[j - 1]]) / 2;
+            else
+              hs1T = 0;
 
-            if (fabs (v10L) < EPS)
+            if (is_zero (v10L))
               hs1BB = 0;
             else
               hs1BB = (H[M0L_H[M0L_H[j]]] + H[M0L_H[M0L_H[j]]]) / 2;
 
-            if (fabs (v1L0) < EPS)
+            if (is_zero (v1L0))
               hs2LL = 0;
             else
               hs2LL = (H[j - 2] + H[j - 2]) / 2;

@@ -16,12 +16,12 @@
 #define MAX_ITER 2000
 #define OMEGA 1
 #define COEF  M_PI
-#define INIT_X 20
-#define INIT_T 500
+#define INIT_X 10
+#define INIT_T 10
 
 #define LASPACK 1
-#define RELEASE 1
-#define SOKOLOV 0
+#define RELEASE 0
+#define SOKOLOV 1
 
 /// FOR GNUPLOT
 #define FILE_COMMAND "com.txt"
@@ -36,14 +36,14 @@ void print_norms_to_file (const char * filename, int n, int m,
                           double *nl2g, double *nl2v1, double *nl2v2, double *nwg, double *nwv1, double *nwv2, double *time);
 
 /// NORMS
-void Norm_c (int it, int n,
+void Norm_c (int it, int nh, int n,
              double *G, double *V1, double *V2, double *X, double *Y, double t,
-             double *res_G, double *res_V1, double *res_V2);
-void Norm_l2 (int it, int n,
+             double *res_G, double *res_V1, double *res_V2, double *X_H, double *Y_H);
+void Norm_l2 (int it, int nh, int n,
               double *G, double *V1, double *V2, double *X, double *Y, double t,
-              double *res_G, double *res_V1, double *res_V2, double h, int *st);
-void Norm_Wl2 (int it, int n, double *G, double *V1, double *V2, double *X, double *Y, double t,
-               double *res_G, double *res_V1, double *res_V2, double h, int *st, int *M0L);
+              double *res_G, double *res_V1, double *res_V2, double h, int *st, double *X_H, double *Y_H);
+void Norm_Wl2 (int it, int nh, int n, double *G, double *V1, double *V2, double *X, double *Y, double t,
+               double *res_G, double *res_V1, double *res_V2, double h, int *st, int *sth, int *M0L, double *X_H, double *Y_H, int *M0L_H);
 
 ///SETKA
 void set_str (int *st, double *X, double *Y, int *bot, int *top, P_she *p_s,
@@ -112,3 +112,4 @@ void copy_answer_L_H (Vector *x, double *G, int n);
 void copy_answer_L_V (Vector *x, double *V1, double *V2, int n);
 void prepare_to_solve_system_L_H (Vector *d, double *G, int n);
 void prepare_to_solve_system_L_V (Vector *d, double *V1, double *V2, int n);
+void run_gnuplot_S (P_she *p_s, int time_step, double *X, double *Y, double *X_H, double *Y_H, double *G, double *V1, double *V2);

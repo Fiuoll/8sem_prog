@@ -25,24 +25,19 @@ void Shema_S (double *G, int *st_H, double *X_H, double *Y_H, int *M0L_H, int *M
               double *V1, double *V2, int *st, double *X, double *Y, int *M0L, int *M0R,
               P_she *p_s, P_gas *p_d)
 {
-  double t = 0;
   int timestep;
-  int n, nz, k, nH;
+  int n, k, nH;
   int i, j;
   QMatrix_L A, AH;
   Vector b, bH;
   Vector x, xH;
-  double *matrix;
-  int    *ind;
-  double *rhs;
-  double *d;
   double *H;
   double gamma;
 #include"./include_S/perem.c"
 
   n = p_s->Dim;
   nH = p_s->S_DimH;
-  nz = p_s->nz;
+//  nz = p_s->nz;
   mu = p_d->mu;
   pressure = p_d->p_ro;
   hx = p_s->h_x;
@@ -63,14 +58,7 @@ if (LASPACK)
     SetRTCAccuracy (eps);
   }
 else
-  {
-    printf ("Only LASPACK is supported with SOKOLOV!");
-    return;
-    matrix = (double *) malloc (nz * sizeof (double));
-    ind    = (int *) malloc (nz * sizeof (int));
-    rhs    = (double *) malloc (3 * n * sizeof (double));
-    d      = (double *) malloc (7 * (3 * n) * sizeof (double));
-  }
+  return ;
 
 #include"./include_S/viraj.c"
 #include"./include_S/nachal.c"
@@ -143,6 +131,10 @@ printf ("Computing...\n");
           BiCGSTABIter (&A, &x, &b, MAX_ITER, JacobiPrecond, 1);
           copy_answer_L_V (&x, V1, V2, n);
           copy_answer_L_H (&xH, G, nH);
+          for (k = 0; k < nH; k++)
+            {
+              G[k] = H[k];
+            }
         }
 
       if (LASPACK && LASResult ())
@@ -158,7 +150,7 @@ printf ("Computing...\n");
 
       if (RELEASE)
         {
-          run_gnuplot (p_s, timestep, X, Y, G, V1, V2);
+          run_gnuplot_S (p_s, timestep, X, Y, X_H, Y_H, G, V1, V2);
         }
     }
   if (LASPACK)
@@ -166,13 +158,6 @@ printf ("Computing...\n");
       Q_Destr (&A);
       V_Destr (&b);
       V_Destr (&x);
-    }
-  else
-    {
-      free (matrix);
-      free (rhs);
-      free (ind);
-      free (d);
     }
 }
 

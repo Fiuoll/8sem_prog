@@ -22,7 +22,7 @@ void Setka_S (int *st, double *X, double *Y, int *bot, int *top, P_she *p_s)
   fill_1 (top, p_s->S_DimH);
 
   set_str (st, X, Y, bot, top, p_s,
-           &i, 7, 3, 2, 2 * n,
+           &i, 3, 3, 3, 2 * n,
            1 * COEF + hx2, hy2, 2 * n, 2 * n /*bot[i]<0*/);
 
   for (j = 1; j < 2 * m - 1; j++)
@@ -36,7 +36,7 @@ void Setka_S (int *st, double *X, double *Y, int *bot, int *top, P_she *p_s)
            1 * COEF + hx2, j * p_s->h_y + hy2, 3 * n, 2 * n);
 
   set_str (st, X, Y, bot, top, p_s,
-           &i, 7, 5, 5, n,
+           &i, 4, 5, 5, n,
            hx2, 2 * COEF + hy2, 3 * n, 5 * n * m /*bot[i] < 0*/);
 
   set_str (st, X, Y, bot, top, p_s,
@@ -52,6 +52,6 @@ void Setka_S (int *st, double *X, double *Y, int *bot, int *top, P_she *p_s)
     }
 
   set_str (st, X, Y, bot, top, p_s,
-           &i, 7, 6, 7, 3 * n,
+           &i, 4, 6, 7, 3 * n,
            hx2, 3 * COEF + hy2, 3 * n, 3 * n);
 }

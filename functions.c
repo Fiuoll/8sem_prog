@@ -2,11 +2,11 @@
 
 void param_dif (P_gas * p_d)
 {
-  p_d->Segm_T = 100;
+  p_d->Segm_T = 1;
   p_d->Segm_X = COEF;
   p_d->Segm_Y = COEF;
   p_d->p_ro = 1;
-  p_d->mu = 0.01;
+  p_d->mu = 0.1;
 }
 
 void param_she_step (P_she *p_s, P_gas *p_d, int it_t, int it_sp)
@@ -52,7 +52,7 @@ double inv_g (double t)
 double inv_v1 (double t)
 {
   (void) t;
-  return 0.1;
+  return 0.;
 }
 
 double sm_g (double t, double x, double y)
@@ -68,7 +68,7 @@ double sm_vx (double t, double x, double y)
 {
   if (RELEASE)
     {
-      return 0;
+//      return 0;
       if (y > 2 * M_PI)
         return 0.1;
       return 0;
@@ -80,7 +80,7 @@ double sm_vy (double t, double x, double y)
 {
   if (RELEASE)
     {
-      return 0;
+//      return 0;
       if (x < M_PI)
         return 0;
       return -0.1;

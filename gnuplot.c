@@ -54,8 +54,8 @@ void print_paint_vectors_command (char *path, const char *fname)
 }
 void print_G_to_file (P_she *p_s, double *X, double *Y, int n, double *G, FILE *fp)
 {
-  double x = 0;
   double h = p_s->h_x;
+  double x = SOKOLOV ? h / 2 : 0;
   int M = p_s->M_x;
   int i, j;
 
@@ -67,7 +67,7 @@ void print_G_to_file (P_she *p_s, double *X, double *Y, int n, double *G, FILE *
           if (fabs (x - X[j]) > 1e-12)
             continue;
 
-          fprintf (fp, "%e %e %e\n", X[j], Y[j], exp (G[j]));
+          fprintf (fp, "%e %e %e\n", X[j], Y[j], SOKOLOV ? G[j] : exp (G[j]));
         }
       fprintf (fp, "\n");
     }
@@ -116,6 +116,26 @@ void run_gnuplot (P_she *p_s, int time_step, double *X, double *Y, double *G, do
   FILE *fg = fopen (FILE_G, "w");
   FILE *fv = fopen (FILE_V, "w");
   print_G_to_file (p_s, X, Y, p_s->Dim, G, fg);
+  print_V_to_file (p_s, X, Y, p_s->Dim, V1, V2, fv);
+  fclose (fg);
+  fclose (fv);
+  print_paint_pm3d_command (path_g, FILE_G);
+  print_paint_vectors_command (path_u1, FILE_V);
+
+  // GNUPLOT
+  fill_command_file ("G",  p_s, time_step, path_g);
+  run_gnuplott ();
+  fill_command_file ("V", p_s, time_step, path_u1);
+  run_gnuplott ();
+}
+void run_gnuplot_S (P_she *p_s, int time_step, double *X, double *Y, double *X_H, double *Y_H, double *G, double *V1, double *V2)
+{
+  char path_g [LEN];
+  char path_u1 [LEN];
+
+  FILE *fg = fopen (FILE_G, "w");
+  FILE *fv = fopen (FILE_V, "w");
+  print_G_to_file (p_s, X_H, Y_H, p_s->S_DimH, G, fg);
   print_V_to_file (p_s, X, Y, p_s->Dim, V1, V2, fv);
   fclose (fg);
   fclose (fv);

@@ -147,9 +147,9 @@ int main(int argc, char *argv[])
               correct_array (p_s.Dim, G);
               correct_array (p_s.Dim, V1);
               correct_array (p_s.Dim, V2);
-              Norm_c (it, p_s.Dim, G, V1, V2, X, Y, 1, nc_g, nc_v1, nc_v2);
-              Norm_l2 (it, p_s.Dim, G, V1, V2, X, Y, 1, nl2_g, nl2_v1, nl2_v2, p_s.h_x, st);
-              Norm_Wl2 (it, p_s.Dim, G, V1, V2, X, Y, 1, nw_g, nw_v1, nw_v2, p_s.h_x, st, M0L);
+              Norm_c (it, p_s.S_DimH, p_s.Dim, G, V1, V2, X, Y, 1, nc_g, nc_v1, nc_v2, H_X, H_Y);
+              Norm_l2 (it, p_s.S_DimH, p_s.Dim, G, V1, V2, X, Y, 1, nl2_g, nl2_v1, nl2_v2, p_s.h_x, st, H_X, H_Y);
+              Norm_Wl2 (it, p_s.Dim, p_s.Dim, G, V1, V2, X, Y, 1, nw_g, nw_v1, nw_v2, p_s.h_x, st, H_st, M0L, H_X, H_Y, H_M0L);
 
               tim[it] = (clock () - time) / CLOCKS_PER_SEC;
 

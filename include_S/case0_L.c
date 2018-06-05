@@ -35,7 +35,6 @@ if (st[i] == 0)
           Q_SetEntry (&A, mmv100, 5, mmv10R, - mu * thyy);
           //V1B
           Q_SetEntry (&A, mmv100, 6, mmv10L, - mu * thyy);
-          //V1
         }
       else
         {

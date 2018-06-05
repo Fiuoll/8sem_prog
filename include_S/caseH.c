@@ -39,12 +39,11 @@ else
    }
   else
    {
-     if (!is_zero (v1s2))
+     if (!is_zero (v1s2) && st_H[i] != 4)
        Q_SetEntry (&AH, mmg00, k++, mmgL0, -thx * v1s2);
     tmp += thx * v1s2R;
-
-    if (st_H[i] == 4 && RELEASE)
-      tmp += inv_g (tt);
+    if (st_H[i] == 4)
+    tmp += inv_g (tt) * thx * inv_v1 (tt);
    }
 
   if (v2s1 < 0)
